@@ -10,7 +10,7 @@ export const userRouter = new Hono<{
   };
 }>();
 
-userRouter.post("signup", async (c) => {
+userRouter.post("/signup", async (c) => {
   try {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
@@ -31,7 +31,7 @@ userRouter.post("signup", async (c) => {
         data: { email, password, name },
       });
       if (user) {
-        const token = await sign(email, c.env.JWT_SECRET);
+        const token = await sign({ id: user.id }, c.env.JWT_SECRET);
         return c.json({ token }, 201);
       } else {
         return c.json({ message: "Error creating new user" }, 500);
@@ -41,7 +41,7 @@ userRouter.post("signup", async (c) => {
     return c.json({ message: "Server Error" }, 500);
   }
 });
-userRouter.post("/api/v1/user/signin", async (c) => {
+userRouter.post("/signin", async (c) => {
   try {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
@@ -63,7 +63,7 @@ userRouter.post("/api/v1/user/signin", async (c) => {
       if (user.password !== password) {
         return c.json({ message: "Incorrect Email or Password" }, 401);
       }
-      const token = await sign({ email }, c.env.JWT_SECRET);
+      const token = await sign({ id: user.id }, c.env.JWT_SECRET);
       return c.json({ token }, 200);
     }
   } catch (error) {
