@@ -10,8 +10,8 @@ const app = new Hono<{
   };
 }>();
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
+app.get("/test", (c) => {
+  return c.text("Server is up!");
 });
 
 app.post("/api/v1/user/signup", async (c) => {
@@ -21,35 +21,28 @@ app.post("/api/v1/user/signup", async (c) => {
     }).$extends(withAccelerate());
 
     const { email, password, name } = await c.req.json();
-    if (email && password) {      
-      const existingUser = await prisma.user.findUnique({
-        where: { email }
-      });
-      console.log("existingUser" , existingUser);
+    if (!email || !password)
+      return c.json({ message: "Please provide valid credentials" }, 400);
 
-      if (existingUser) {
-        c.status(403);
-        return c.json({ msg: "User already exists!" });
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      return c.json({ message: "User already exists!" }, 409);
+    } else {
+      const user = await prisma.user.create({
+        data: { email, password, name },
+      });
+      if (user) {
+        const token = await sign(email, c.env.JWT_SECRET);
+        return c.json({ token }, 201);
       } else {
-        const user = await prisma.user.create({
-          data: { email, password, name },
-        });
-        console.log(user);
-        
-        if (user) {
-          const token = await sign(email, c.env.JWT_SECRET);
-          return c.json({ token }, 200);
-        } else {
-          c.status(403);
-          return c.json({ msg: "Error creating new user" });
-        }
+        return c.json({ message: "Error creating new user" }, 500);
       }
     }
-    else { 
-     return c.json({"message" : "Please provide email and password"})
-    }
   } catch (error) {
-    throw new Error("Server Error");
+    return c.json({ message: "Server Error" }, 500);
   }
 });
 app.post("/api/v1/user/signin", async (c) => {
@@ -60,23 +53,25 @@ app.post("/api/v1/user/signin", async (c) => {
 
     const { email, password } = await c.req.json();
 
+    if (!email || !password)
+      return c.json({ message: "Please provide valid credentials" }, 400);
+
     const user = await prisma.user.findUnique({
       where: {
         email,
-        password
       },
     });
     if (!user) {
-      return c.json({ message: "User doesnt exists" });
+      return c.json({ message: "User does not exist" }, 404);
     } else {
       if (user.password !== password) {
-        return c.json({ message: "Incorrect Email or Password" });
+        return c.json({ message: "Incorrect Email or Password" }, 401);
       }
-      const jwt = await sign({ email }, c.env.JWT_SECRET);
-      return c.json({ jwt });
+      const token = await sign({ email }, c.env.JWT_SECRET);
+      return c.json({ token }, 200);
     }
   } catch (error) {
-    throw new Error("Server Error");
+    return c.json({ message: "Server Error" }, 500);
   }
 });
 app.post("/api/v1/user/blog", (c) => {
