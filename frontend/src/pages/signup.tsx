@@ -3,16 +3,40 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import AuthPage from "@/components/auth-page";
+import { signupInput, SignupInput } from "@amartripathi/blog-types";
+
 
 export default function Signup() {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const [user, setUser] = useState<SignupInput>({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", { email, password });
-    // Here you would typically handle the form submission
+    const res = signupInput.safeParse(user);
+      
+    if (!res.success) {
+      console.error("Invalid input for signup");
+    } else {
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/v1/user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      }
+    }
   };
 
   return (
@@ -28,10 +52,10 @@ export default function Signup() {
           <Input
             id="name"
             type="name"
-            placeholder="Enter your email"
+            placeholder="Enter your name"
             required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={user.name}
+            onChange={(e) => setUser({ ...user, name: e.target.value })}
             className="w-full"
           />
         </div>
@@ -44,8 +68,8 @@ export default function Signup() {
             type="email"
             placeholder="Enter your email"
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={user.email}
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
             className="w-full"
           />
         </div>
@@ -58,8 +82,8 @@ export default function Signup() {
             type="password"
             placeholder="Create a password"
             required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={user.password}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
             className="w-full"
           />
         </div>
