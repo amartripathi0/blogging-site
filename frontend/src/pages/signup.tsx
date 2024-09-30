@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import AuthPage from "@/components/auth-page";
 import { signupInput, SignupInput } from "@amartripathi/blog-types";
 import { toast } from "sonner";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [user, setUser] = useState<SignupInput>({
@@ -13,16 +13,18 @@ export default function Signup() {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
+
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = signupInput.safeParse(user);
 
     if (!res.success) {
-      toast.error("Invalid input for signup" );
+      toast.error("Invalid input for signup");
     } else {
       try {
-        const response = await fetch(`${BACKEND_URL}/api/v1/user`, {
+        const response = await fetch(`${BACKEND_URL}/api/v1/user/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -30,12 +32,14 @@ export default function Signup() {
           body: JSON.stringify(user),
         });
         if (!response.ok) {
-           toast.error("Internal Server Error");
+          toast.error("Internal Server Error");
+        } else {
+          const { token } = await response.json();
+          localStorage.setItem("token", token);
+          navigate("/blogs");
         }
-        const data = await response.json();
-        console.log(data);
       } catch (error) {
-         toast.error("Internal Server Error");
+        toast.error("Internal Server Error");
       }
     }
   };

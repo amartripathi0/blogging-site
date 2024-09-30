@@ -4,12 +4,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signinInput } from "@amartripathi/blog-types";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +21,7 @@ export default function Signin() {
     if (parseResult.error) toast.error("Invalid input for signin");
     else {
       try {
-        const response = await fetch(`${BACKEND_URL}/api/v1/user`, {
+        const response = await fetch(`${BACKEND_URL}/api/v1/user/signin`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -29,9 +31,11 @@ export default function Signin() {
 
         if (!response.ok) {
           toast.error("Internal Server Error");
+        } else {
+          const { token } = await response.json();
+          localStorage.setItem("token", token);
+          navigate("/blogs");
         }
-        const data = await response.json();
-        console.log(data);
       } catch (error) {
         toast.error("Internal Server Error");
       }
