@@ -46,6 +46,7 @@ export default function Signin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full"
+            autoComplete="on"
           />
         </div>
         <Button type="submit" className="w-full">

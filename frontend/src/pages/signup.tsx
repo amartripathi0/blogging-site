@@ -16,7 +16,7 @@ export default function Signup() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = signupInput.safeParse(user);
-      
+
     if (!res.success) {
       console.error("Invalid input for signup");
     } else {
@@ -85,6 +85,7 @@ export default function Signup() {
             value={user.password}
             onChange={(e) => setUser({ ...user, password: e.target.value })}
             className="w-full"
+            autoComplete="on"
           />
         </div>
         <Button type="submit" className="w-full">
