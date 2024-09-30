@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function Quote({quote} : {quote : string}) {
+export default function Quote({quote ,author} : {quote : string, author ?: string}) {
   return (
     <motion.div
       className="w-full md:w-1/2 bg-indigo-600 p-8 flex flex-col justify-center relative overflow-hidden"
@@ -24,7 +24,7 @@ export default function Quote({quote} : {quote : string}) {
         {quote}
       </blockquote>
       <cite className="text-indigo-200 not-italic relative z-10">
-        - Eleanor Roosevelt
+        - {author}
       </cite>
 
       {/* Decorative Element */}

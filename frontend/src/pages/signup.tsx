@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import AuthPage from "@/components/auth-page";
 import { signupInput, SignupInput } from "@amartripathi/blog-types";
+import { toast } from "sonner";
 
 
 export default function Signup() {
@@ -18,7 +19,7 @@ export default function Signup() {
     const res = signupInput.safeParse(user);
 
     if (!res.success) {
-      console.error("Invalid input for signup");
+      toast.error("Invalid input for signup" );
     } else {
       try {
         const response = await fetch(`${BACKEND_URL}/api/v1/user`, {
@@ -29,12 +30,12 @@ export default function Signup() {
           body: JSON.stringify(user),
         });
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+           toast.error("Internal Server Error");
         }
         const data = await response.json();
         console.log(data);
       } catch (error) {
-        console.error("There was a problem with the fetch operation:", error);
+         toast.error("Internal Server Error");
       }
     }
   };
@@ -43,6 +44,7 @@ export default function Signup() {
     <AuthPage
       formHeading="Sign Up"
       pageQuote="The future belongs to those who believe in the beauty of their dreams."
+      author="Eleanor Roosevelt"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col gap-2">

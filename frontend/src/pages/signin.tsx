@@ -2,22 +2,47 @@ import AuthPage from "@/components/auth-page";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { signinInput } from "@amartripathi/blog-types";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Signin() {
-   const [email, setEmail] = useState("");
-   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-   const handleSubmit = (e: React.FormEvent) => {
-     e.preventDefault();
-     console.log("Form submitted:", { email, password });
-     // Here you would typically handle the form submission
-   };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const parseResult = signinInput.safeParse({ email, password });
+
+    if (parseResult.error) toast.error("Invalid input for signin");
+    else {
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/v1/user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(parseResult.data),
+        });
+
+        if (!response.ok) {
+          toast.error("Internal Server Error");
+        }
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        toast.error("Internal Server Error");
+      }
+    }
+  };
 
   return (
     <AuthPage
       formHeading="Sign In"
-      pageQuote="The future belongs to those who believe in the beauty of their dreams."
+      pageQuote="The greatest glory in living lies not in never falling, but in rising every time we fall."
+      author="Nelson Mandela"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col gap-2">
@@ -56,4 +81,3 @@ export default function Signin() {
     </AuthPage>
   );
 }
-

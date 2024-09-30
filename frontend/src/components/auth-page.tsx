@@ -6,11 +6,13 @@ interface AuthPageProps {
   formHeading: "Sign Up" | "Sign In";
   pageQuote: string;
   children: React.ReactNode;
+  author ?: string
 }
 export default function AuthPage({
   formHeading,
   children,
   pageQuote,
+  author
 }: AuthPageProps) {
   const navigate = useNavigate();
   function handleNavigate() {
@@ -65,7 +67,7 @@ export default function AuthPage({
           </motion.div>
 
           {/* Quote Section */}
-          <Quote quote={pageQuote} />
+          <Quote quote={pageQuote} author={author} />
         </div>
       </motion.div>
     </div>
