@@ -27,3 +27,13 @@ export const updateBlogInput = z.object({
   id: z.number(),
 });
 export type UpdateBlogInput = z.infer<typeof updateBlogInput>;
+
+export const blog = z.object({
+  id: z.string(),
+  title: z.string().min(4).max(60),
+  content: z.string(),
+  published: z.boolean().default(false),
+  authorId: z.string(),
+});
+
+export type BlogType = z.infer<typeof blog>;
