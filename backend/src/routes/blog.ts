@@ -2,6 +2,11 @@ import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { verify } from "hono/jwt";
+import {
+  createBlogInput,
+  updateBlogInput,
+  UpdateBlogInput,
+} from "@amartripathi/blog-types";
 
 export const blogRouter = new Hono<{
   Bindings: {
@@ -32,7 +37,11 @@ blogRouter.post("/", async (c) => {
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
-    const { title, content } = await c.req.json();
+    const body = createBlogInput.safeParse(await c.req.json());
+    if (!body.success)
+      return c.json({ message: "Please provide valid data" }, 400);
+
+    const { title, content } = body.data
     const authorId = c.get("userId");
     const blog = await prisma.post.create({
       data: {
@@ -53,7 +62,11 @@ blogRouter.put("", async (c) => {
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
-    const { title, content, published } = await c.req.json();
+    const body = updateBlogInput.safeParse(await c.req.json());
+    if (!body.success)
+      return c.json({ message: "Please provide valid data" }, 400);
+
+    const { title, content }: UpdateBlogInput = body.data;
     const authorId = c.get("userId");
 
     const blog = await prisma.post.update({
@@ -63,7 +76,6 @@ blogRouter.put("", async (c) => {
       data: {
         title,
         content,
-        published,
       },
     });
 
