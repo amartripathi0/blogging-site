@@ -4,6 +4,7 @@ compatibility_flags = [ "nodejs_compat" ]
 
 [vars]
 DATABASE_URL="YOUR_Accelerate_Connection_Pool_Link"
+FROTEND_URL = "http://localhost:5173"
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
