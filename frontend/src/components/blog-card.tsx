@@ -7,18 +7,19 @@ export default function BlogCard({ title, content } : Partial<BlogType>) {
       className="bg-neutral-800 rounded shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -5}}
+      whileHover={{ y: -5 }}
     >
       <div className="p-4">
-        <span className="text-xs font-semibold text-blue-600 uppercase">
-          {"post.category"}
-        </span>
-        <h2 className="text-xl font-semibold mt-2 mb-2 text-gray-100">
-          {title}
-        </h2>
-        <p className="text-gray-300 mb-4">{content}</p>
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-xs font-semibold text-blue-600 uppercase">
+            {"post.category"}
+          </span>
           <span className="text-sm text-gray-200">{"post.date"}</span>
+        </div>
+        <h2 className="text-xl font-semibold my-2 text-gray-100">{title}</h2>
+
+        <p className="text-gray-300 my-2  mb-4 line-clamp-2 h-12">{content}</p>
+        <div className="flex justify-end items-center">
           <motion.button
             className="text-blue-500 hover:text-blue-600 transition-colors duration-150 flex items-center text-sm font-semibold"
             whileHover={{ x: 5 }}

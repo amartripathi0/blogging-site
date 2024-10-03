@@ -4,7 +4,7 @@ import Footer from "@/components/footer";
 
 export default function Homepage() {
   return (
-    <main className="flex flex-col">
+    <main>
         <LandingPage/>
         <BlogsPage/>
         <Footer />
