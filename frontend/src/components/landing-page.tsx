@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function LandingPage() {
  
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white pt-10">
+    <div className="-z-10 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white pt-10">
       <main
         className="container mx-auto px-4 flex flex-col justify-center items-center text-center "
         style={{ minHeight: "calc(100vh - 64px)" }}

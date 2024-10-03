@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 export default function Navbar() {
   return (
     <nav className="fixed w-screen top-4">
-      <div className="container w-4/5 mx-auto px-4 py-3 flex justify-between items-center  backdrop-blur-md bg-white bg-opacity-10 rounded shadow-md">
+      <div className="container w-4/5 mx-auto px-4 py-3 flex justify-between items-center  backdrop-blur-sm bg-white bg-opacity-10 rounded shadow-sm">
         <a href="/" className="flex items-center space-x-2">
           <img
             src="/placeholder.svg"
@@ -12,7 +12,7 @@ export default function Navbar() {
             height={40}
             className="rounded-full"
           />
-          <span className="text-xl font-bold text-white">Blogs and Blogs</span>
+          <span className="text-xl font-bold text-blue-500">Blogs and Blogs</span>
         </a>
         <div className="flex space-x-2">
           <Button

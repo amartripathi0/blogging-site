@@ -33,7 +33,8 @@ const blogPosts = [
   {
     id: "5",
     title: "Accessibility in Modern Web Apps",
-    content: "Ensuring your web applications are accessible to all users.",
+    content:
+      "Ensuring your web applications are accessible to all users. nsuring your web applications are accessible to all users.nsuring your web applications are accessible to all users.nsuring your web applications are accessible to all users.",
     published: true,
     authorId: "1",
   },
@@ -49,16 +50,16 @@ const blogPosts = [
 
 export default function BlogsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-8">
+    <div className="-z-10 min-h-screen bg-gradient-to-br bg-neutral-900 p-8 px-44 ">
       <motion.h1
-        className="text-4xl font-bold text-center mb-12 text-purple-800"
+        className="text-4xl font-bold text-center mb-12 text-blue-600"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         Our Latest Blog Posts
       </motion.h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {blogPosts.map(({ title, content }, index) => (
           <BlogCard key={index} title={title} content={content} />
         ))}

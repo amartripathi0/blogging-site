@@ -3,15 +3,15 @@ import "./App.css";
 import Signin from "./pages/signin";
 import Signup from "./pages/signup";
 import BlogsPage from "./pages/blogs";
-import LandingPage from "./pages/landing-page";
 import Navbar from "./components/navbar";
+import Homepage from "./pages/homepage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path = '/' element={<LandingPage />} />
+          <Route path = '/' element={<Homepage />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/blogs" element={<BlogsPage />} />
