@@ -1,9 +1,64 @@
 import { useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
+import { Avatar } from "./ui/avatar";
 
 export default function Navbar() {
   const { pathname } = useLocation();
+
+  function renderAuthButtons(){
+    switch (pathname) {
+      case "/":
+        return (
+          <>
+            <a href="/signin">
+              <Button
+                variant="ghost"
+                className="text-white bg-blue-500 hover:text-blue-900 hover:bg-blue-400 rounded"
+              >
+                Sign In
+              </Button>
+            </a>
+            <a href="/signup">
+              <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded">
+                Sign Up
+              </Button>
+            </a>
+          </>
+        );
+      case "/signin":
+        return (
+          <a href="/signup">
+            <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded">
+              Sign Up
+            </Button>
+          </a>
+        );
+      case "/signup":
+        return (
+          <a href="/signin">
+            <Button
+              variant="ghost"
+              className="text-white bg-blue-500 hover:text-blue-900 hover:bg-blue-400 rounded"
+            >
+              Sign In
+            </Button>
+          </a>
+        );
+      default:
+        return (
+          <div className="flex">
+            <Button
+              variant="ghost"
+              className="text-white bg-blue-500 hover:text-blue-900 hover:bg-blue-400 rounded"
+            >
+              Logout
+            </Button>
+            <Avatar />
+          </div>
+        );
+    }
+  };
 
   return (
     <motion.nav
@@ -31,38 +86,7 @@ export default function Navbar() {
           </span>
         </a>
         <div className="flex space-x-2">
-          {pathname !== "/signin" && pathname !== "/signup" ? (
-            <>
-              <a href="/signin">
-                <Button
-                  variant="ghost"
-                  className="text-white bg-blue-500 hover:text-blue-900 hover:bg-blue-400 rounded"
-                >
-                  Sign In
-                </Button>
-              </a>
-              <a href="/signup">
-                <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded">
-                  Sign Up
-                </Button>
-              </a>
-            </>
-          ) : pathname === "/signin" ? (
-            <a href="/signup">
-              <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded">
-                Sign Up
-              </Button>
-            </a>
-          ) : (
-            <a href="/signin">
-              <Button
-                variant="ghost"
-                className="text-white bg-blue-500 hover:text-blue-900 hover:bg-blue-400 rounded"
-              >
-                Sign In
-              </Button>
-            </a>
-          )}
+          {renderAuthButtons()}
         </div>
       </div>
     </motion.nav>
