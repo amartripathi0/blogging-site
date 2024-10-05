@@ -22,4 +22,6 @@ model Post {
   published Boolean  @default(false)
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
+  category  String   @default("Uncategorized")
+  date      DateTime @default(now())
 }
