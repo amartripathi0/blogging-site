@@ -8,7 +8,7 @@ export default function Navbar() {
       transition={{ duration: 1 }}
       className="fixed w-screen top-4 z-10 backdrop-blur-sm"
     >
-      <div className="container  w-4/5 mx-auto px-4 py-3 flex justify-between items-center   bg-white bg-opacity-10 rounded shadow-sm ">
+      <div className="container w-4/5 mx-auto px-4 py-3 flex justify-between items-center bg-white bg-opacity-10 rounded shadow-sm ">
         <a href="/" className="flex items-center space-x-2">
           <img
             src="/placeholder.svg"
