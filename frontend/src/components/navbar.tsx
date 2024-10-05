@@ -1,8 +1,11 @@
 import { Button } from "./ui/button";
-
+import {motion} from 'framer-motion';
 export default function Navbar() {
   return (
-    <nav className="fixed w-screen top-4">
+    <motion.nav initial ={{y:10, opacity : 0}}
+    animate ={{y:0, opacity : 1}}
+    transition={{duration : 1}}
+    className="fixed w-screen top-4">
       <div className="container w-4/5 mx-auto px-4 py-3 flex justify-between items-center  backdrop-blur-sm bg-white bg-opacity-10 rounded shadow-sm">
         <a href="/" className="flex items-center space-x-2">
           <img
@@ -26,6 +29,6 @@ export default function Navbar() {
           </Button>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 }
