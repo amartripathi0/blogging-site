@@ -1,6 +1,10 @@
+import { useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
+
 export default function Navbar() {
+  const { pathname } = useLocation();
+
   return (
     <motion.nav
       initial={{ y: 10, opacity: 0 }}
@@ -27,20 +31,38 @@ export default function Navbar() {
           </span>
         </a>
         <div className="flex space-x-2">
-          <a href="/signin">
-            <Button
-              variant="ghost"
-              className="text-white bg-blue-500 hover:text-blue-200 hover:bg-white/10 rounded"
-            >
-              Sign In
-            </Button>
-          </a>
-          <a href="/signup">
-          
-            <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded">
-              Sign Up
-            </Button>
-          </a>
+          {pathname !== "/signin" && pathname !== "/signup" ? (
+            <>
+              <a href="/signin">
+                <Button
+                  variant="ghost"
+                  className="text-white bg-blue-500 hover:text-blue-200 hover:bg-white/10 rounded"
+                >
+                  Sign In
+                </Button>
+              </a>
+              <a href="/signup">
+                <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded">
+                  Sign Up
+                </Button>
+              </a>
+            </>
+          ) : pathname === "/signin" ? (
+            <a href="/signup">
+              <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded">
+                Sign Up
+              </Button>
+            </a>
+          ) : (
+            <a href="/signin">
+              <Button
+                variant="ghost"
+                className="text-white bg-blue-500 hover:text-blue-200 hover:bg-white/10 rounded"
+              >
+                Sign In
+              </Button>
+            </a>
+          )}
         </div>
       </div>
     </motion.nav>
