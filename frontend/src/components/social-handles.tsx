@@ -3,7 +3,7 @@ import { SocialHandleProps } from "@/lib/types";
 
 export default function SocialHandles({nameDisable} : {nameDisable ?: boolean}) {
   return (
-    <nav className="flex space-x-6">
+    <nav className="flex space-x-4">
       {socialHandles.map((socialHandle) => (
         <SocialHandle
           key={socialHandle.name}
