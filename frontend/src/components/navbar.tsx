@@ -36,7 +36,7 @@ export default function Navbar() {
               <a href="/signin">
                 <Button
                   variant="ghost"
-                  className="text-white bg-blue-500 hover:text-blue-200 hover:bg-white/10 rounded"
+                  className="text-white bg-blue-500 hover:text-blue-900 hover:bg-blue-400 rounded"
                 >
                   Sign In
                 </Button>
@@ -57,7 +57,7 @@ export default function Navbar() {
             <a href="/signin">
               <Button
                 variant="ghost"
-                className="text-white bg-blue-500 hover:text-blue-200 hover:bg-white/10 rounded"
+                className="text-white bg-blue-500 hover:text-blue-900 hover:bg-blue-400 rounded"
               >
                 Sign In
               </Button>
