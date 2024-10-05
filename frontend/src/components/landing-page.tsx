@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SocialHandles from "./social-handles";
 
 export default function LandingPage() {
   return (
@@ -18,7 +19,7 @@ export default function LandingPage() {
           Blogs and Blogs
         </motion.h1>
         <motion.p
-          className="text-xl md:text-xl mb-12 max-w-2xl text-neutral-200 font-light"
+          className="text-xl md:text-xl mb-4 max-w-2xl text-neutral-200 font-light"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
@@ -26,6 +27,14 @@ export default function LandingPage() {
           Discover insightful articles, expert opinions, and cutting-edge ideas
           from industry leaders.
         </motion.p>
+        <motion.div
+          className="text-xl md:text-xl mb-12 max-w-2xl text-neutral-200 font-light"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 1 }}
+        >
+          <SocialHandles nameDisable = {true} />
+        </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}

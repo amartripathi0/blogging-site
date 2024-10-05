@@ -1,7 +1,7 @@
 import { socialHandles } from "@/lib/constant";
 import { SocialHandleProps } from "@/lib/types";
 
-export default function SocialHandles() {
+export default function SocialHandles({nameDisable} : {nameDisable ?: boolean}) {
   return (
     <nav className="flex space-x-6">
       {socialHandles.map((socialHandle) => (
@@ -10,6 +10,7 @@ export default function SocialHandles() {
           name={socialHandle.name}
           link={socialHandle.link}
           icon={socialHandle.icon}
+          nameDisable = {nameDisable}
         />
       ))}
     </nav>
