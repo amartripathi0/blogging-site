@@ -94,7 +94,7 @@ export default function Signup() {
             autoComplete="on"
           />
         </div>
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full border rounded border-neutral-800 bg-blue-300 hover:bg-blue-400">
           Create Account
         </Button>
       </form>
