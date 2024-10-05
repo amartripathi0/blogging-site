@@ -3,8 +3,6 @@ import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function LandingPage() {
- 
-
   return (
     <div className="-z-10 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white pt-10">
       <main
@@ -31,7 +29,7 @@ export default function LandingPage() {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2, duration: 0.8 }}
+          transition={{ delay: 1.6, duration: 0.8 }}
         >
           <a href="/blogs">
             <Button
