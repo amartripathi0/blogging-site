@@ -27,15 +27,20 @@ export default function Navbar() {
           </span>
         </a>
         <div className="flex space-x-2">
-          <Button
-            variant="ghost"
-            className="text-white bg-blue-500 hover:text-blue-200 hover:bg-white/10 rounded"
-          >
-            Sign In
-          </Button>
-          <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded">
-            Sign Up
-          </Button>
+          <a href="/signin">
+            <Button
+              variant="ghost"
+              className="text-white bg-blue-500 hover:text-blue-200 hover:bg-white/10 rounded"
+            >
+              Sign In
+            </Button>
+          </a>
+          <a href="/signup">
+          
+            <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded">
+              Sign Up
+            </Button>
+          </a>
         </div>
       </div>
     </motion.nav>
