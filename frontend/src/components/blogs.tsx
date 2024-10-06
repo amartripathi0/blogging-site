@@ -30,6 +30,7 @@ export default function BlogsPage({
         {blogsArray.map(({ title, content, date, category, id }) => (
           <BlogCard
             key={id}
+            id={id}
             title={title}
             content={content}
             date={date}

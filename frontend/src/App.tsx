@@ -6,6 +6,7 @@ import Navbar from "./components/navbar";
 import Homepage from "./pages/homepage";
 import Footer from "./components/footer";
 import User from "./pages/user";
+import { BlogPost } from "./pages/blog";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/user" element={<User />} />
+          <Route path="/user/blog/:id" element={<BlogPost />} />
         </Route>
       </Routes>
     </BrowserRouter>
