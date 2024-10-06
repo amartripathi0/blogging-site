@@ -18,6 +18,9 @@ export type SigninInput = z.infer<typeof signinInput>;
 export const createBlogInput = z.object({
   title: z.string(),
   content: z.string(),
+  published : z.boolean(),
+  category: z.string(),
+  date: z.string().datetime(),
 });
 export type CreateBlogInput = z.infer<typeof createBlogInput>;
 
@@ -34,6 +37,8 @@ export const blog = z.object({
   content: z.string(),
   published: z.boolean().default(false),
   authorId: z.string(),
+  category: z.string(),
+  date: z.string().datetime(),
 });
 
 export type BlogType = z.infer<typeof blog>;
