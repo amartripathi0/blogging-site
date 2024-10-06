@@ -41,13 +41,15 @@ blogRouter.post("/", async (c) => {
     if (!body.success)
       return c.json({ message: "Please provide valid data" }, 400);
 
-    const { title, content } = body.data
+    const { title, content, published , category , date }  = body.data
     const authorId = c.get("userId");
     const blog = await prisma.post.create({
       data: {
         title,
         content,
         authorId,
+        published,
+        category,
       },
     });
 
@@ -56,7 +58,7 @@ blogRouter.post("/", async (c) => {
     return c.json({ message: "Server Error" }, 500);
   }
 });
-blogRouter.put("", async (c) => {
+blogRouter.put("/", async (c) => {
   try {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
@@ -90,9 +92,14 @@ blogRouter.get("/blogs", async (c) => {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
+    const authorId = c.get("userId");
 
-    const blogs = await prisma.post.findMany();
-
+    const blogs = await prisma.post.findMany({
+      where : {
+        authorId
+      }
+    });
+    
     return c.json({ blogs });
   } catch (error) {
     return c.json({ message: "Server Error" }, 500);
