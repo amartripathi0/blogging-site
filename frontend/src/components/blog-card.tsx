@@ -1,7 +1,22 @@
 import { motion } from "framer-motion";
-import { BlogType }  from '@amartripathi/blog-types'
+import { BlogType } from "@amartripathi/blog-types";
 import { ArrowRight } from "lucide-react";
-export default function BlogCard({ title, content } : Partial<BlogType>) {
+export default function BlogCard({
+  title,
+  content,
+  date,
+  category,
+}: Partial<BlogType>) {
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  console.log(date);
+
+  const blogDate = new Date(date || "");
+  const formattedDate = blogDate.toLocaleDateString("en-US", options);
+
   return (
     <motion.div
       className="bg-neutral-800 rounded shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-neutral-900"
@@ -12,9 +27,9 @@ export default function BlogCard({ title, content } : Partial<BlogType>) {
       <div className="p-4">
         <div className="flex items-center justify-between gap-2">
           <span className="text-xs font-semibold text-blue-600 uppercase">
-            {"post.category"}
+            {category}
           </span>
-          <span className="text-sm text-gray-200">{"post.date"}</span>
+          <span className="text-sm text-gray-200">{formattedDate}</span>
         </div>
         <h2 className="text-xl font-semibold my-2 text-gray-100">{title}</h2>
 
