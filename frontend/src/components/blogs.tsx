@@ -6,10 +6,12 @@ export default function BlogsPage({
   blogsRef,
   blogsArray,
   title,
+  pageType,
 }: {
   blogsArray: BlogType[];
-  title ?: string
+  title?: string;
   blogsRef?: React.MutableRefObject<HTMLDivElement | null>;
+  pageType : "homepageBlogPage" | "userBlogPage" ;
 }) {
   return (
     <div
@@ -32,6 +34,7 @@ export default function BlogsPage({
             content={content}
             date={date}
             category={category}
+            pageType={pageType}
           />
         ))}
       </div>

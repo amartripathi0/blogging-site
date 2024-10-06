@@ -12,6 +12,7 @@ export default function Homepage() {
         blogsRef={blogsRef}
         blogsArray={homepageBlogPosts}
         title="Our Latest Blog Posts"
+        pageType="homepageBlogPage"
       />
     </main>
   );

@@ -1,12 +1,15 @@
 import { motion } from "framer-motion";
 import { BlogType } from "@amartripathi/blog-types";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Pen } from "lucide-react";
+import { cn } from "@/lib/utils";
 export default function BlogCard({
   title,
   content,
   date,
   category,
-}: Partial<BlogType>) {
+  pageType
+}: Partial<BlogType> &   {pageType : "homepageBlogPage" | "userBlogPage"} 
+) {
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
@@ -34,7 +37,21 @@ export default function BlogCard({
         <h2 className="text-xl font-semibold my-2 text-gray-100">{title}</h2>
 
         <p className="text-gray-300 my-2  mb-4 line-clamp-2 h-12">{content}</p>
-        <div className="flex justify-end items-center">
+        <div
+          className={cn(
+            "flex items-center",
+            pageType === "userBlogPage" ? "justify-between" : "justify-end"
+          )}
+        >
+          {pageType === "userBlogPage" && (
+            <motion.button
+              className="text-blue-500 hover:text-blue-600 transition-colors duration-150 flex items-center text-sm font-semibold gap-1.5"
+              whileHover={{ x: 5 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+              Edit <Pen size={15} />
+            </motion.button>
+          )}
           <motion.button
             className="text-blue-500 hover:text-blue-600 transition-colors duration-150 flex items-center text-sm font-semibold"
             whileHover={{ x: 5 }}
