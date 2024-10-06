@@ -2,30 +2,31 @@ import { motion } from "framer-motion";
 import { BlogType } from "@amartripathi/blog-types";
 import { ArrowRight, Pen } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 export default function BlogCard({
+  id,
   title,
   content,
   date,
   category,
-  pageType
-}: Partial<BlogType> &   {pageType : "homepageBlogPage" | "userBlogPage"} 
-) {
+  pageType,
+}: Partial<BlogType> & { pageType: "homepageBlogPage" | "userBlogPage" }) {
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
     day: "numeric",
   };
-  console.log(date);
 
   const blogDate = new Date(date || "");
   const formattedDate = blogDate.toLocaleDateString("en-US", options);
-
+  const navigate = useNavigate();
   return (
     <motion.div
       className="bg-neutral-800 rounded shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-neutral-900"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -5 }}
+      onClick={() => navigate(`/user/blog/${id}`)}
     >
       <div className="p-4">
         <div className="flex items-center justify-between gap-2">
