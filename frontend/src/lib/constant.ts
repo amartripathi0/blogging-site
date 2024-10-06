@@ -3,7 +3,7 @@ import { SocialHandleProps } from "./types";
 
 export const socialHandles: SocialHandleProps[] = [
   {
-    name: "Portfolio",
+    name: "My Portfolio",
     icon: Globe,
     link: "https://amartripathi.vercel.app/",
   },

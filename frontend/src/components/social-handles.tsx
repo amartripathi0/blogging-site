@@ -26,6 +26,7 @@ function SocialHandle({
   return (
     <a
       href={link}
+      target = "_blank"
       className="flex items-center text-gray-400 hover:text-blue-500 transition-colors"
     >
       <Icon className="h-5 w-5 mr-2" />
