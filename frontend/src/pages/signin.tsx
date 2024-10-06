@@ -33,7 +33,7 @@ export default function Signin() {
           toast.error("Internal Server Error");
         } else {
           const { token } = await response.json();
-          localStorage.setItem("token", token);
+          localStorage.setItem("token", `Bearer ${token}`);
           navigate("/user");
         }
       } catch {
