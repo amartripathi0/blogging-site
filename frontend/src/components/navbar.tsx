@@ -63,8 +63,12 @@ export default function Navbar() {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="text-white bg-neutral-900 rounded px-2 border-neutral-600">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuItem className="hover:bg-neutral-700 ">Name</DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-neutral-700 ">Email@Email.com</DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-neutral-700 ">
+                  Name
+                </DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-neutral-700 ">
+                  Email@Email.com
+                </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Button
                     variant="ghost"
@@ -90,7 +94,8 @@ export default function Navbar() {
       <div className="container w-4/5 mx-auto px-4 py-3 flex justify-between items-center bg-white bg-opacity-10 rounded shadow-sm ">
         <a href="/" className="flex items-center space-x-2">
           <svg
-            className="h-8 w-8 mr-3 text-blue-600"
+            className="h-8 w-8 mr-3"
+            color="#2563eb "
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -101,9 +106,9 @@ export default function Navbar() {
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
           </svg>
-          <span className="text-xl font-bold text-blue-500">
-            Blogs and Blogs
-          </span>
+          <h1 className="text-xl font-bold text-white">
+            Blogs <span className="text-blue-500"> and </span> Blogs
+          </h1>
         </a>
         <div className="flex space-x-2">{renderAuthButtons()}</div>
       </div>

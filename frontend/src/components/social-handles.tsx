@@ -27,7 +27,7 @@ function SocialHandle({
     <a
       href={link}
       target = "_blank"
-      className="flex items-center text-gray-400 hover:text-blue-500 transition-colors"
+      className="flex items-center text-gray-300 hover:text-blue-500 transition-colors"
     >
       <Icon className="h-5 w-5 mr-2" />
       {!nameDisable && <span>{name}</span>}
