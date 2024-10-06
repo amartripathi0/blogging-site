@@ -6,6 +6,7 @@ import AuthPage from "@/components/auth-page";
 import { signupInput, SignupInput } from "@amartripathi/blog-types";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "lucide-react";
 
 export default function Signup() {
   const [user, setUser] = useState<SignupInput>({
@@ -14,6 +15,7 @@ export default function Signup() {
     password: "",
   });
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,6 +36,7 @@ export default function Signup() {
         if (!response.ok) {
           toast.error("Internal Server Error");
         } else {
+          setIsLoading(false);
           const { token } = await response.json();
           localStorage.setItem("token", `Bearer ${token}`);
           navigate("/user");
@@ -94,8 +97,16 @@ export default function Signup() {
             autoComplete="on"
           />
         </div>
-        <Button type="submit" className="w-full border rounded border-neutral-800 bg-blue-300 hover:bg-blue-400">
-          Create Account
+        <Button
+          type="submit"
+          className="w-full border rounded border-neutral-800 bg-blue-300 hover:bg-blue-400"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <Loader className="animate-spin" />
+          ) : (
+            "Create an Account"
+          )}
         </Button>
       </form>
     </AuthPage>

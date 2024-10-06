@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signinInput } from "@amartripathi/blog-types";
+import { Loader } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -10,12 +11,14 @@ import { toast } from "sonner";
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const parseResult = signinInput.safeParse({ email, password });
 
     if (parseResult.error) toast.error("Invalid input for signin");
@@ -32,6 +35,7 @@ export default function Signin() {
         if (!response.ok) {
           toast.error("Internal Server Error");
         } else {
+          setIsLoading(false);
           const { token } = await response.json();
           localStorage.setItem("token", `Bearer ${token}`);
           navigate("/user");
@@ -81,8 +85,9 @@ export default function Signin() {
         <Button
           type="submit"
           className="w-full border rounded border-neutral-800 bg-blue-300 hover:bg-blue-400"
+          disabled={isLoading}
         >
-          Sign in
+          {isLoading ? <Loader className="animate-spin" /> : "Sign in"}
         </Button>
       </form>
     </AuthPage>
