@@ -3,7 +3,11 @@ import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SocialHandles from "./social-handles";
 
-export default function LandingPage() {
+export default function LandingPage({
+  blogsRef,
+}: {
+  blogsRef: React.MutableRefObject<HTMLDivElement | null>;
+}) {
   return (
     <div className="-z-10 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white pt-10">
       <main
@@ -33,17 +37,20 @@ export default function LandingPage() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
         >
-          <SocialHandles nameDisable = {true} />
+          <SocialHandles nameDisable={true} />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.6, duration: 0.8 }}
         >
-          <a href="/blogs">
+          <a href="#homepageBlogs">
             <Button
               size="lg"
               className="bg-blue-600 text-white hover:bg-blue-700 rounded"
+              onClick={() =>
+                blogsRef?.current?.scrollIntoView({ behavior: "smooth" })
+              }
             >
               Explore Our Content <ArrowDown className="ml-2" />
             </Button>
