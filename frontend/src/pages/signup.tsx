@@ -36,9 +36,9 @@ export default function Signup() {
         } else {
           const { token } = await response.json();
           localStorage.setItem("token", token);
-          navigate("/blogs");
+          navigate("/user");
         }
-      } catch (error) {
+      } catch{
         toast.error("Internal Server Error");
       }
     }

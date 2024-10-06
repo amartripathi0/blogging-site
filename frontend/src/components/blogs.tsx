@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 export default function BlogsPage({
   blogsRef,
   blogsArray,
+  title,
 }: {
   blogsArray: BlogType[];
+  title ?: string
   blogsRef?: React.MutableRefObject<HTMLDivElement | null>;
 }) {
   return (
@@ -20,7 +22,7 @@ export default function BlogsPage({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Our Latest Blog Posts
+        {title}
       </motion.h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {blogsArray.map(({ title, content, date, category, id }) => (

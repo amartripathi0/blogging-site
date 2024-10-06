@@ -1,5 +1,5 @@
 import LandingPage from "@/components/landing-page";
-import BlogsPage from "./blogs";
+import BlogsPage from "../components/blogs";
 import { useRef } from "react";
 import { homepageBlogPosts } from "@/lib/constant";
 
@@ -8,7 +8,11 @@ export default function Homepage() {
   return (
     <main>
       <LandingPage blogsRef={blogsRef} />
-      <BlogsPage blogsRef={blogsRef} blogsArray={homepageBlogPosts}/>
+      <BlogsPage
+        blogsRef={blogsRef}
+        blogsArray={homepageBlogPosts}
+        title="Our Latest Blog Posts"
+      />
     </main>
   );
 }
