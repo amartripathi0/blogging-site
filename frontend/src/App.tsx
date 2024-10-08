@@ -6,7 +6,7 @@ import Navbar from "./components/navbar";
 import Homepage from "./pages/homepage";
 import Footer from "./components/footer";
 import User from "./pages/user";
-import { BlogPost } from "./pages/blog";
+import { BlogPost } from "./components/blogpost";
 
 function App() {
   return (
