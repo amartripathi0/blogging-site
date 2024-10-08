@@ -21,8 +21,10 @@ export default function Signin() {
     setIsLoading(true);
     const parseResult = signinInput.safeParse({ email, password });
 
-    if (parseResult.error) toast.error("Invalid input for signin");
-    else {
+    if (parseResult.error) {
+      setIsLoading(false);
+      toast.error("Invalid input for signin");
+    } else {
       try {
         const response = await fetch(`${BACKEND_URL}/api/v1/user/signin`, {
           method: "POST",
@@ -33,6 +35,7 @@ export default function Signin() {
         });
 
         if (!response.ok) {
+          setIsLoading(false);
           toast.error("Internal Server Error");
         } else {
           setIsLoading(false);
@@ -41,6 +44,7 @@ export default function Signin() {
           navigate("/user");
         }
       } catch {
+        setIsLoading(false);
         toast.error("Internal Server Error");
       }
     }

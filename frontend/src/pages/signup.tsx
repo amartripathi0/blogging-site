@@ -20,9 +20,12 @@ export default function Signup() {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = signupInput.safeParse(user);
+    setIsLoading(true);
 
-    if (!res.success) {
+    const parseResult = signupInput.safeParse(user);
+
+    if (!parseResult.success) {
+      setIsLoading(false);
       toast.error("Invalid input for signup");
     } else {
       try {
@@ -34,6 +37,7 @@ export default function Signup() {
           body: JSON.stringify(user),
         });
         if (!response.ok) {
+          setIsLoading(false);
           toast.error("Internal Server Error");
         } else {
           setIsLoading(false);
@@ -41,7 +45,8 @@ export default function Signup() {
           localStorage.setItem("token", `Bearer ${token}`);
           navigate("/user");
         }
-      } catch{
+      } catch {
+        setIsLoading(false);
         toast.error("Internal Server Error");
       }
     }
