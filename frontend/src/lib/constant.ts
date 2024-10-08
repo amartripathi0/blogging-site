@@ -66,24 +66,24 @@ export const homepageBlogPosts: BlogType[] = [
     category: "Productivity",
     date: "2024-04-05T09:00:00Z",
   },
-  {
-    id: "5",
-    title: "Accessibility in Modern Web Apps",
-    content:
-      "As the digital landscape continues to evolve, ensuring that web applications are accessible to all users has never been more important. In this article, we delve into the best practices for achieving accessibility in modern web apps. We start with the fundamentals of semantic HTML and how it lays the groundwork for accessibility. Then, we explore ARIA (Accessible Rich Internet Applications) roles and properties, detailing how they enhance user experience for individuals with disabilities. We also discuss the significance of keyboard navigation, color contrast, and text alternatives for images. Furthermore, we provide tips on testing your applications with screen readers and other assistive technologies to ensure compliance with accessibility standards. By prioritizing accessibility, developers not only widen their audience but also contribute to a more inclusive web. This guide is essential for anyone looking to build web applications that cater to all users, regardless of their abilities.",
-    published: true,
-    authorId: "1",
-    category: "Accessibility",
-    date: "2024-05-15T11:30:00Z",
-  },
-  {
-    id: "6",
-    title: "Serverless Architecture Explained",
-    content:
-      "Serverless architecture is a game-changer in the world of cloud computing, allowing developers to focus on writing code without the burden of managing servers. In this article, we explain the fundamentals of serverless computing, its benefits, and its challenges. We cover how platforms like AWS Lambda, Azure Functions, and Google Cloud Functions enable developers to build applications that automatically scale and only charge for the compute time consumed. The article also highlights the event-driven nature of serverless applications, illustrating how they respond to events from various sources, such as HTTP requests, database changes, and file uploads. However, we also discuss the potential drawbacks, including vendor lock-in and cold start latency, offering strategies to mitigate these challenges. By the end of this article, you will have a comprehensive understanding of serverless architecture and how it can transform your development workflow, enabling you to build more scalable and cost-effective applications.",
-    published: true,
-    authorId: "1",
-    category: "Cloud Computing",
-    date: "2024-06-25T16:45:00Z",
-  },
+  // {
+  //   id: "5",
+  //   title: "Accessibility in Modern Web Apps",
+  //   content:
+  //     "As the digital landscape continues to evolve, ensuring that web applications are accessible to all users has never been more important. In this article, we delve into the best practices for achieving accessibility in modern web apps. We start with the fundamentals of semantic HTML and how it lays the groundwork for accessibility. Then, we explore ARIA (Accessible Rich Internet Applications) roles and properties, detailing how they enhance user experience for individuals with disabilities. We also discuss the significance of keyboard navigation, color contrast, and text alternatives for images. Furthermore, we provide tips on testing your applications with screen readers and other assistive technologies to ensure compliance with accessibility standards. By prioritizing accessibility, developers not only widen their audience but also contribute to a more inclusive web. This guide is essential for anyone looking to build web applications that cater to all users, regardless of their abilities.",
+  //   published: true,
+  //   authorId: "1",
+  //   category: "Accessibility",
+  //   date: "2024-05-15T11:30:00Z",
+  // },
+  // {
+  //   id: "6",
+  //   title: "Serverless Architecture Explained",
+  //   content:
+  //     "Serverless architecture is a game-changer in the world of cloud computing, allowing developers to focus on writing code without the burden of managing servers. In this article, we explain the fundamentals of serverless computing, its benefits, and its challenges. We cover how platforms like AWS Lambda, Azure Functions, and Google Cloud Functions enable developers to build applications that automatically scale and only charge for the compute time consumed. The article also highlights the event-driven nature of serverless applications, illustrating how they respond to events from various sources, such as HTTP requests, database changes, and file uploads. However, we also discuss the potential drawbacks, including vendor lock-in and cold start latency, offering strategies to mitigate these challenges. By the end of this article, you will have a comprehensive understanding of serverless architecture and how it can transform your development workflow, enabling you to build more scalable and cost-effective applications.",
+  //   published: true,
+  //   authorId: "1",
+  //   category: "Cloud Computing",
+  //   date: "2024-06-25T16:45:00Z",
+  // },
 ];
