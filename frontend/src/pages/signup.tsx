@@ -24,7 +24,7 @@ export default function Signup() {
 
     const parseResult = signupInput.safeParse(user);
 
-    if (!parseResult.success) {
+    if (parseResult.error) {
       setIsLoading(false);
       toast.error("Invalid input for signup");
     } else {
