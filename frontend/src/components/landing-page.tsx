@@ -8,6 +8,15 @@ export default function LandingPage({
 }: {
   blogsRef: React.MutableRefObject<HTMLDivElement | null>;
 }) {
+  const buttonAnimation = {
+    y: [0, 20],
+    transition: {
+      duration: 1,
+      repeat: Infinity,
+      repeatType: "reverse" as const, 
+    },
+  };
+
   return (
     <div className="-z-10 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white pt-10">
       <main
@@ -45,15 +54,19 @@ export default function LandingPage({
           transition={{ delay: 1.6, duration: 0.8 }}
         >
           <a href="#homepageBlogs">
-            <Button
-              size="lg"
-              className="bg-blue-600 text-white hover:bg-blue-700 rounded"
-              onClick={() =>
-                blogsRef?.current?.scrollIntoView({ behavior: "smooth" })
-              }
+            <motion.div
+              animate={buttonAnimation}
             >
-              Explore Our Content <ArrowDown className="ml-2" />
-            </Button>
+              <Button
+                size="lg"
+                className="bg-blue-600 text-white hover:bg-blue-700 rounded"
+                onClick={() =>
+                  blogsRef?.current?.scrollIntoView({ behavior: "smooth" })
+                }
+              >
+                Explore Our Content <ArrowDown className="ml-2" />
+              </Button>
+            </motion.div>
           </a>
         </motion.div>
       </main>
