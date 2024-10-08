@@ -8,13 +8,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
-export function BlogPost({
-  blogData,
-  pageType,
-}: {
-  blogData: BlogType;
-  pageType : "homepageBlogPage" | "userBlogPage";
-}) {
+export function BlogPost() {
   const [blog, setBlog] = useState<BlogType>();
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const { id } = useParams();
@@ -35,11 +29,7 @@ export function BlogPost({
   }
 
   useEffect(() => {
-    if (pageType === "homepageBlogPage") {
-      setBlog(blogData);
-    } else {
-      getBlog();
-    }
+    getBlog();
   }, []);
 
   if (!blog) {

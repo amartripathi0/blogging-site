@@ -20,6 +20,7 @@ export default function BlogCard({
   const blogDate = new Date(date || "");
   const formattedDate = blogDate.toLocaleDateString("en-US", options);
   const navigate = useNavigate();
+
   return (
     <motion.div
       className="bg-neutral-800 rounded shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-neutral-900"
@@ -37,7 +38,7 @@ export default function BlogCard({
         </div>
         <h2 className="text-xl font-semibold my-2 text-gray-100">{title}</h2>
 
-        <p className="text-gray-300 my-2  mb-4 line-clamp-2 h-12">{content}</p>
+        <p className="text-neutral-300 my-2 mb-4 line-clamp-4 text-ellipsis text-pretty h-24">{content}</p>
         <div
           className={cn(
             "flex items-center",
