@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +8,13 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
-export const BlogPost: React.FC = () => {
+export function BlogPost({
+  blogData,
+  pageType,
+}: {
+  blogData: BlogType;
+  pageType : "homepageBlogPage" | "userBlogPage";
+}) {
   const [blog, setBlog] = useState<BlogType>();
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const { id } = useParams();
@@ -29,7 +35,11 @@ export const BlogPost: React.FC = () => {
   }
 
   useEffect(() => {
-    getBlog();
+    if (pageType === "homepageBlogPage") {
+      setBlog(blogData);
+    } else {
+      getBlog();
+    }
   }, []);
 
   if (!blog) {
@@ -109,4 +119,4 @@ export const BlogPost: React.FC = () => {
       </motion.div>
     </div>
   );
-};
+}
