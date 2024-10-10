@@ -11,7 +11,7 @@ export default function BlogsPage({
   blogsArray: BlogType[];
   title?: string;
   blogsRef?: React.MutableRefObject<HTMLDivElement | null>;
-  pageType : "homepageBlogPage" | "userBlogPage" ;
+  pageType: "homepageBlogPage" | "userBlogPage";
 }) {
   return (
     <div
@@ -27,16 +27,8 @@ export default function BlogsPage({
         {title}
       </motion.h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {blogsArray.map(({ title, content, date, category, id }) => (
-          <BlogCard
-            key={id}
-            id={id}
-            title={title}
-            content={content}
-            date={date}
-            category={category}
-            pageType={pageType}
-          />
+        {blogsArray.map((blog) => (
+          <BlogCard blog={blog} pageType={pageType} />
         ))}
       </div>
     </div>

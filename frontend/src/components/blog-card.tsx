@@ -4,20 +4,19 @@ import { ArrowRight, Pen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 export default function BlogCard({
-  id,
-  title,
-  content,
-  date,
-  category,
+  blog,
   pageType,
-}: Partial<BlogType> & { pageType: "homepageBlogPage" | "userBlogPage" }) {
+}: {
+  blog?: BlogType;
+  pageType: "homepageBlogPage" | "userBlogPage";
+}) {
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
     day: "numeric",
   };
 
-  const blogDate = new Date(date || "");
+  const blogDate = new Date(blog?.date || "");
   const formattedDate = blogDate.toLocaleDateString("en-US", options);
   const navigate = useNavigate();
 
@@ -27,18 +26,29 @@ export default function BlogCard({
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -5 }}
-      onClick={() => navigate(`/user/blog/${id}`)}
+      onClick={() =>
+        navigate(`/user/blog/${blog?.id}`, {
+          state: {
+            pageType,
+            blog,
+          },
+        })
+      }
     >
       <div className="p-4">
         <div className="flex items-center justify-between gap-2">
           <span className="text-xs font-semibold text-blue-600 uppercase">
-            {category}
+            {blog?.category}
           </span>
           <span className="text-sm text-gray-200">{formattedDate}</span>
         </div>
-        <h2 className="text-xl font-semibold my-2 text-gray-100">{title}</h2>
+        <h2 className="text-xl font-semibold my-2 text-gray-100">
+          {blog?.title}
+        </h2>
 
-        <p className="text-neutral-300 my-2 mb-4 line-clamp-4 text-ellipsis text-pretty h-24">{content}</p>
+        <p className="text-neutral-300 my-2 mb-4 line-clamp-4 text-ellipsis text-pretty h-24">
+          {blog?.content}
+        </p>
         <div
           className={cn(
             "flex items-center",

@@ -5,13 +5,14 @@ import { Badge } from "@/components/ui/badge";
 import { CalendarIcon, Clock, User, Tag } from "lucide-react";
 import { BlogType } from "@amartripathi/blog-types";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 export function BlogPost() {
   const [blog, setBlog] = useState<BlogType>();
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const { id } = useParams();
+  const { state } = useLocation();
 
   async function getBlog() {
     try {
@@ -29,7 +30,11 @@ export function BlogPost() {
   }
 
   useEffect(() => {
-    getBlog();
+    if (state?.pageType === "homepageBlogPage") {
+      setBlog(state?.blog);
+    } else {
+      getBlog();
+    }
   }, []);
 
   if (!blog) {
