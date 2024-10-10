@@ -1,6 +1,6 @@
 import BlogsPage from "@/components/blogs";
 import { BlogType } from "@amartripathi/blog-types";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,8 +21,8 @@ function User() {
       });
 
       setBlogs(response.data?.blogs || []);
-    } catch (error) {
-      const errorMessage = error?.response?.data || "An error occurred";
+    } catch (error: unknown) {
+      const errorMessage = (error as AxiosError)?.response?.data || "An error occurred";
       toast.error(`${errorMessage}, Please signin`);
       navigate('/signin');
     }
