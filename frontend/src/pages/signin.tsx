@@ -91,7 +91,14 @@ export default function Signin() {
           className="w-full border rounded border-neutral-800 bg-blue-300 hover:bg-blue-400"
           disabled={isLoading}
         >
-          {isLoading ? <Loader className="animate-spin" /> : "Sign in"}
+          {isLoading ? (
+            <>
+              {" "}
+              <Loader className="animate-spin mr-2" size={18}/> Signin...
+            </>
+          ) : (
+            "Sign in"
+          )}
         </Button>
       </form>
     </AuthPage>

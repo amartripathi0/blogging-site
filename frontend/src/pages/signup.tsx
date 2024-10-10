@@ -108,7 +108,9 @@ export default function Signup() {
           disabled={isLoading}
         >
           {isLoading ? (
-            <Loader className="animate-spin" />
+            <>
+           <Loader className="animate-spin mr-2" size={18}/> Signup...
+            </>
           ) : (
             "Create an Account"
           )}
