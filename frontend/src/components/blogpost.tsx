@@ -24,7 +24,7 @@ export function BlogPost() {
       });
       setBlog(response.data?.blog || {});
     } catch (error) {
-      const errorMessage = error?.response?.data || "An error occurred";
+      const errorMessage = (error as any)?.response?.data || "An error occurred";
       toast.error(`${errorMessage}`);
     }
   }
@@ -35,7 +35,7 @@ export function BlogPost() {
     } else {
       getBlog();
     }
-  }, []);
+  }, [state]);
 
   if (!blog) {
     return (
@@ -54,7 +54,7 @@ export function BlogPost() {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-neutral-900 to-neutral-800 pt-24 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <Card className="w-full max-w-4xl mx-auto bg-neutral-800 text-white shadow-2xl relative rounded  mt-24 border-neutral-700">
+      <Card className="w-full max-w-4xl mx-auto bg-neutral-800 text-white shadow-2xl relative rounded mt-24 border-neutral-700">
         <CardHeader className="relative">
           <motion.div
             initial={{ y: -50, opacity: 0 }}
