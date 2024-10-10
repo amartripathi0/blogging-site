@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarIcon, Clock, User, Tag } from "lucide-react";
 import { BlogType } from "@amartripathi/blog-types";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useLocation, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -23,8 +23,8 @@ export function BlogPost() {
         },
       });
       setBlog(response.data?.blog || {});
-    } catch (error) {
-      const errorMessage = (error as any)?.response?.data || "An error occurred";
+    } catch (error : unknown) {
+      const errorMessage = (error as AxiosError)?.response?.data || "An error occurred";
       toast.error(`${errorMessage}`);
     }
   }
