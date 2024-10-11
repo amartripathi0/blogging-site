@@ -1,7 +1,8 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SocialHandles from "./social-handles";
+import { useRef } from "react";
 
 export default function LandingPage({
   blogsRef,
@@ -13,12 +14,23 @@ export default function LandingPage({
     transition: {
       duration: 1,
       repeat: Infinity,
-      repeatType: "reverse" as const, 
+      repeatType: "reverse" as const,
     },
   };
+  const targetRef = useRef(null);
+  const { scrollYProgress } = useScroll();
+  const borderRadius = useTransform(scrollYProgress, [0.05, 1], ["1%", "50%"]);
 
   return (
-    <div className="-z-10 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white pt-10">
+    <motion.div
+      style={{
+        borderBottomLeftRadius: borderRadius,
+        borderBottomRightRadius: borderRadius,
+        boxShadow: borderRadius,
+      }}
+      ref={targetRef}
+      className="-z-10 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white pt-10"
+    >
       <main
         className="container mx-auto px-4 flex flex-col justify-center items-center text-center "
         style={{ minHeight: "calc(100vh - 64px)" }}
@@ -54,9 +66,7 @@ export default function LandingPage({
           transition={{ delay: 1.6, duration: 0.8 }}
         >
           <a href="#homepageBlogs">
-            <motion.div
-              animate={buttonAnimation}
-            >
+            <motion.div animate={buttonAnimation}>
               <Button
                 size="lg"
                 className="bg-blue-600 text-white hover:bg-blue-700 rounded"
@@ -95,6 +105,6 @@ export default function LandingPage({
           />
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
