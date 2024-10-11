@@ -27,7 +27,7 @@ export default function BlogCard({
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -5 }}
       onClick={() =>
-        navigate(`/user/blog/${blog?.id}`, {
+        navigate(`/blog/${blog?.id}`, {
           state: {
             pageType,
             blog,

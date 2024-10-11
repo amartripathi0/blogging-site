@@ -18,6 +18,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/user" element={<User />} />
           <Route path="/user/blog/:id" element={<BlogPost />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
         </Route>
       </Routes>
     </BrowserRouter>

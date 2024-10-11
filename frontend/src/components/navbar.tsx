@@ -14,8 +14,9 @@ export default function Navbar() {
   const { pathname } = useLocation();
 
   function renderAuthButtons() {
-    switch (pathname) {
-      case "/":
+    switch (true) {
+      case pathname === "/":
+      case pathname.startsWith('/blog'):
         return (
           <>
             <a href="/signin">
@@ -33,7 +34,7 @@ export default function Navbar() {
             </a>
           </>
         );
-      case "/signin":
+      case pathname === "/signin":
         return (
           <a href="/signup">
             <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded">
@@ -41,7 +42,7 @@ export default function Navbar() {
             </Button>
           </a>
         );
-      case "/signup":
+      case pathname === "/signup":
         return (
           <a href="/signin">
             <Button
