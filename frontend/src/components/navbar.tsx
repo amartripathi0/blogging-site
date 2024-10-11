@@ -54,6 +54,45 @@ export default function Navbar() {
             </Button>
           </a>
         );
+      case pathname === "/user/blog/createBlog":
+        return (
+          <div className="flex gap-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Avatar>
+                  <AvatarImage src="https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png" />
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="text-white bg-neutral-900 rounded p-2  w-44 border-neutral-600">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuItem className="hover:bg-neutral-700 ">
+                  Name
+                </DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-neutral-700 ">
+                  Email@Email.com
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link to={"/user"} className="w-full">
+                    <Button
+                      variant="ghost"
+                      className="w-full text-white bg-blue-500 hover:text-blue-900 hover:bg-blue-400 rounded"
+                    >
+                      Dashboard
+                    </Button>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Button
+                    variant="ghost"
+                    className="w-full text-white bg-blue-500 hover:text-blue-900 hover:bg-blue-400 rounded"
+                  >
+                    Log out
+                  </Button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        );
       default:
         return (
           <div className="flex gap-4">
@@ -68,7 +107,7 @@ export default function Navbar() {
                   <AvatarImage src="https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png" />
                 </Avatar>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="text-white bg-neutral-900 rounded px-2 border-neutral-600">
+              <DropdownMenuContent className="text-white bg-neutral-900 rounded p-2 border-neutral-600 w-44">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuItem className="hover:bg-neutral-700 ">
                   Name
