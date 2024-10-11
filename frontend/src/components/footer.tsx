@@ -2,7 +2,7 @@ import SocialHandles from "./social-handles";
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-950 text-gray-300 py-6 px-40">
+    <footer className="bg-slate-950 text-gray-300 py-6 px-40">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center mb-4 md:mb-0">
