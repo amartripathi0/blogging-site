@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
 import { Avatar, AvatarImage } from "./ui/avatar";
@@ -9,6 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { PenIcon } from "lucide-react";
 
 export default function Navbar() {
   const { pathname } = useLocation();
@@ -16,7 +17,7 @@ export default function Navbar() {
   function renderAuthButtons() {
     switch (true) {
       case pathname === "/":
-      case pathname.startsWith('/blog'):
+      case pathname.startsWith("/blog"):
         return (
           <>
             <a href="/signin">
@@ -56,6 +57,11 @@ export default function Navbar() {
       default:
         return (
           <div className="flex gap-4">
+            <Link to="/user/blog/createBlog">
+              <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded flex gap-2">
+                Write a Blog <PenIcon size={14} />
+              </Button>
+            </Link>
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Avatar>
