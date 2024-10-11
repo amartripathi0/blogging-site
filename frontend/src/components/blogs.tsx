@@ -16,7 +16,7 @@ export default function BlogsPage({
   return (
     <div
       ref={blogsRef}
-      className="-z-10 flex flex-col min-h-screen bg-gradient-to-br bg-neutral-900 p-8 px-52 pt-28"
+      className="-z-10 flex flex-col min-h-screen bg-gradient-to-b to-black from-indigo-900 p-8 px-52 pt-28"
     >
       <motion.h1
         className="text-4xl font-bold text-center mb-12 text-blue-500"

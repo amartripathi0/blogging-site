@@ -5,8 +5,9 @@ import { homepageBlogPosts } from "@/lib/constant";
 
 export default function Homepage() {
   const blogsRef = useRef<HTMLDivElement | null>(null);
+    
   return (
-    <main>
+    <main className="bg-indigo-900">
       <LandingPage blogsRef={blogsRef} />
       <BlogsPage
         blogsRef={blogsRef}
