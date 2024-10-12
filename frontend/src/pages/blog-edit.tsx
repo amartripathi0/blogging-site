@@ -36,7 +36,7 @@ export default function FullScreenBlogCreator() {
     };
 
     return (
-      <div className="h-screen bg-neutral-800 flex flex-col py-20 text-white px-24">
+      <div className="h-screen bg-gradient-to-b from-neutral-900 to-indigo-950 flex flex-col py-20 text-white px-24">
         <header className="border-b">
           <div className="container mx-auto px-4 py-4 flex justify-between items-center">
             <h1 className="text-xl font-bold">Create New Blog Post</h1>
@@ -52,8 +52,7 @@ export default function FullScreenBlogCreator() {
                   setBlogPost((prev) => ({ ...prev, published: checked }))
                 }
                 name="published"
-                className='bg-red-200'
-                
+                className="bg-red-200"
               />
               <Label htmlFor="published">Published</Label>
             </div>
