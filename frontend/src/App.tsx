@@ -7,6 +7,7 @@ import Homepage from "./pages/homepage";
 import Footer from "./components/footer";
 import User from "./pages/user";
 import { BlogPost } from "./components/blogpost";
+import BlogPostCreator from "./pages/blog-edit";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/user" element={<User />} />
           <Route path="/user/blog/:id" element={<BlogPost />} />
+          <Route path="/user/blog/createBlog" element={<BlogPostCreator />} />
           <Route path="/blog/:id" element={<BlogPost />} />
         </Route>
       </Routes>
@@ -29,10 +31,10 @@ export default App;
 
 function Layout() {
   return (
-    <>
+    <main className=" bg-neutral-800">
       <Navbar />
       <Outlet />
       <Footer />
-    </>
+    </main>
   );
 }
