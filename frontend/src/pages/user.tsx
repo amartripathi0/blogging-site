@@ -1,4 +1,4 @@
-import BlogsPage from "@/components/blogs";
+import BlogsPage from "@/components/blogs-page";
 import { BlogType } from "@amartripathi/blog-types";
 import axios, { AxiosError } from "axios";
 import { Loader } from "lucide-react";
