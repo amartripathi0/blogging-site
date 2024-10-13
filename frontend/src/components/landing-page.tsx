@@ -5,9 +5,9 @@ import SocialHandles from "./social-handles";
 import { useRef } from "react";
 
 export default function LandingPage({
-  blogsRef,
+  blogsPageRef,
 }: {
-  blogsRef: React.MutableRefObject<HTMLDivElement | null>;
+  blogsPageRef: React.MutableRefObject<HTMLElement | null>;
 }) {
   const buttonAnimation = {
     y: [0, 20],
@@ -19,7 +19,7 @@ export default function LandingPage({
   };
   const targetRef = useRef(null);
   const { scrollYProgress } = useScroll();
-  const borderRadius = useTransform(scrollYProgress, [0.05, 1], ["1%", "50%"]);
+  const borderRadius = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
     <motion.div
@@ -29,7 +29,7 @@ export default function LandingPage({
         boxShadow: borderRadius,
       }}
       ref={targetRef}
-      className="-z-10 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white pt-10"
+      className="-z-10 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white pt-10 shadow-lg shadow-slate-800 mb-8 border-b border-slate-800"
     >
       <main
         className="container mx-auto px-4 flex flex-col justify-center items-center text-center "
@@ -65,19 +65,17 @@ export default function LandingPage({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.6, duration: 0.8 }}
         >
-          <a href="#homepageBlogs">
-            <motion.div animate={buttonAnimation}>
-              <Button
-                size="lg"
-                className="bg-blue-600 text-white hover:bg-blue-700 rounded"
-                onClick={() =>
-                  blogsRef?.current?.scrollIntoView({ behavior: "smooth" })
-                }
-              >
-                Explore Our Content <ArrowDown className="ml-2" />
-              </Button>
-            </motion.div>
-          </a>
+          <motion.div animate={buttonAnimation}>
+            <Button
+              size="lg"
+              className="bg-blue-600 text-white hover:bg-blue-700 rounded"
+              onClick={() =>
+                blogsPageRef?.current?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              Explore Our Content <ArrowDown className="ml-2" />
+            </Button>
+          </motion.div>
         </motion.div>
       </main>
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
