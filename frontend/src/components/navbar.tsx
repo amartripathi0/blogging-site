@@ -54,7 +54,7 @@ export default function Navbar() {
             </Button>
           </a>
         );
-      case pathname === "/user/blog/createBlog":
+      case pathname === "/user/blog/create-blog":
         return (
           <div className="flex gap-4">
             <DropdownMenu>
@@ -96,7 +96,7 @@ export default function Navbar() {
       default:
         return (
           <div className="flex gap-4">
-            <Link to="/user/blog/createBlog">
+            <Link to="/user/blog/create-blog">
               <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded flex gap-2">
                 Write a Blog <PenIcon size={14} />
               </Button>
