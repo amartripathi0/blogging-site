@@ -22,7 +22,7 @@ export default function BlogCard({
 
   return (
     <motion.div
-      className="bg-gradient-to-b from-neutral-900 to-neutral-800  rounded shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-neutral-900"
+      className="bg-gradient-to-b from-indigo-950  to-slate-900  rounded shadow-sm overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-lg shadow-indigo-950"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -5 }}
@@ -37,7 +37,7 @@ export default function BlogCard({
     >
       <div className="p-4">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-xs font-semibold text-blue-600 uppercase">
+          <span className="text-xs font-semibold text-blue-500 uppercase">
             {blog?.category}
           </span>
           <span className="text-sm text-gray-200">{formattedDate}</span>
