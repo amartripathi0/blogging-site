@@ -31,7 +31,7 @@ export default App;
 
 function Layout() {
   return (
-    <main className=" bg-neutral-800">
+    <main className="bg-neutral-800 text-white">
       <Navbar />
       <Outlet />
       <Footer />

@@ -1,25 +1,26 @@
 import BlogCard from "@/components/blog-card";
 import { BlogType } from "@amartripathi/blog-types";
 import { motion } from "framer-motion";
+import PageWrapper from "./page-wrapper";
 
 export default function BlogsPage({
-  blogsRef,
+  blogsPageRef,
   blogsArray,
   title,
   pageType,
 }: {
   blogsArray: BlogType[];
   title?: string;
-  blogsRef?: React.MutableRefObject<HTMLDivElement | null>;
+  blogsPageRef?: React.MutableRefObject<HTMLElement | null>;
   pageType: "homepageBlogPage" | "userBlogPage";
 }) {
   return (
-    <div
-      ref={blogsRef}
-      className="-z-10 flex flex-col min-h-screen bg-gradient-to-b to-black from-indigo-900 p-8 px-52 pt-28"
+    <PageWrapper
+      innerRef={blogsPageRef}
+      additionalStyles="-z-10 flex flex-col items-center min-h-screen bg-gradient-to-b to-black from-indigo-800"
     >
       <motion.h1
-        className="text-4xl font-bold text-center mb-12 text-blue-500"
+        className="text-5xl font-bold text-center mb-12 text-blue-50"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -31,6 +32,6 @@ export default function BlogsPage({
           <BlogCard blog={blog} key={blog.id} pageType={pageType} />
         ))}
       </div>
-    </div>
+    </PageWrapper>
   );
 }

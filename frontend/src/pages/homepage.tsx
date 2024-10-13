@@ -1,16 +1,16 @@
 import LandingPage from "@/components/landing-page";
-import BlogsPage from "../components/blogs";
+import BlogsPage from "../components/blogs-page";
 import { useRef } from "react";
 import { homepageBlogPosts } from "@/lib/constant";
 
 export default function Homepage() {
-  const blogsRef = useRef<HTMLDivElement | null>(null);
-    
+  const blogsPageRef = useRef<HTMLElement | null>(null);
+
   return (
-    <main className="bg-indigo-900">
-      <LandingPage blogsRef={blogsRef} />
+    <main className="bg-indigo-800">
+      <LandingPage blogsPageRef={blogsPageRef} />
       <BlogsPage
-        blogsRef={blogsRef}
+        blogsPageRef={blogsPageRef}
         blogsArray={homepageBlogPosts}
         title="Our Latest Blog Posts"
         pageType="homepageBlogPage"
