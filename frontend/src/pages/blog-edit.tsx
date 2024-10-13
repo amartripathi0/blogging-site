@@ -35,8 +35,7 @@ export default function FullScreenBlogCreator() {
     setBlogPost((prev) => ({ ...prev, content }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     console.log("Blog post to be submitted:", blogPost);
     // Submit your data to the API here
   };
