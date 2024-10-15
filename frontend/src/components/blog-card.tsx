@@ -46,8 +46,8 @@ export default function BlogCard({
           {blog?.title}
         </h2>
 
-        <p className="text-neutral-300 my-2 mb-4 line-clamp-4 text-ellipsis text-pretty h-24">
-          {blog?.content}
+        <p className="text-slate-300 my-2 mb-4 line-clamp-4 text-ellipsis text-pretty h-24">
+          <div dangerouslySetInnerHTML={{ __html: blog?.content || ''}} />
         </p>
         <div
           className={cn(
