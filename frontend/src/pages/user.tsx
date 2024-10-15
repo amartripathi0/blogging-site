@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 function User() {
-  const [blogs, setBlogs] = useState<BlogType[]>([]);
+  const [blogs, setBlogs] = useState<BlogType[]>();
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
 
@@ -32,7 +32,8 @@ function User() {
     getUsersBlogs();
   }, []);
 
-  return blogs ? (
+  return blogs ? 
+  (
     blogs.length > 0 ?
     <BlogsPage
       blogsArray={blogs}
