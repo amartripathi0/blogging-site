@@ -20,7 +20,7 @@ export default function BlogsPage({
       additionalStyles="-z-10 flex flex-col items-center min-h-screen bg-gradient-to-b to-black from-indigo-800"
     >
       <motion.h1
-        className="text-5xl font-bold text-center mb-12 text-blue-50"
+        className="text-4xl font-bold text-center mb-12 text-blue-50"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

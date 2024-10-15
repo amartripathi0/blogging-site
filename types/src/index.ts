@@ -20,7 +20,7 @@ export const createBlogInput = z.object({
   content: z.string(),
   published : z.boolean(),
   category: z.string(),
-  date: z.string().datetime(),
+  date: z.string().date(),
 });
 export type CreateBlogInput = z.infer<typeof createBlogInput>;
 
@@ -38,7 +38,7 @@ export const blog = z.object({
   published: z.boolean().default(false),
   authorId: z.string(),
   category: z.string(),
-  date: z.string().datetime(),
+  date: z.string().date(),
 });
 
 export type BlogType = z.infer<typeof blog>;

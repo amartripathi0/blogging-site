@@ -11,9 +11,13 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Editor } from "@tinymce/tinymce-react";
+import { createBlogInput } from "@amartripathi/blog-types";
+import axios from "axios";
+import { toast } from "sonner";
 
 export default function FullScreenBlogCreator() {
   const TINYMCE_API_KEY = import.meta.env.VITE_TINYMCE_API_KEY;
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const [blogPost, setBlogPost] = useState({
     title: "",
@@ -35,9 +39,37 @@ export default function FullScreenBlogCreator() {
     setBlogPost((prev) => ({ ...prev, content }));
   };
 
-  const handleSubmit = () => {
-    console.log("Blog post to be submitted:", blogPost);
-    // Submit your data to the API here
+  const handleSubmit = async () => {
+            console.log(blogPost);
+
+    const parseResult = createBlogInput.safeParse(blogPost);
+    console.log(parseResult.error);
+    
+    if (parseResult.error) {
+      toast.error("Please provide valid inputs!");
+    } else {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.post(
+          `${BACKEND_URL}/api/v1/blog/`,
+          blogPost,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        console.log(blogPost);
+        console.log(response.data);
+
+        // setBlogs(response.data?.blogs || []);
+      } catch (error: unknown) {
+        // const errorMessage =
+        //   (error as AxiosError)?.response?.data || "An error occurred";
+        // toast.error(`${errorMessage}, Please signin`);
+        // navigate("/signin");
+      }
+    }
   };
 
   const textEditorConfig = {

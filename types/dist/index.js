@@ -19,7 +19,7 @@ exports.createBlogInput = zod_1.default.object({
     content: zod_1.default.string(),
     published: zod_1.default.boolean(),
     category: zod_1.default.string(),
-    date: zod_1.default.string().datetime(),
+    date: zod_1.default.string().date(),
 });
 exports.updateBlogInput = zod_1.default.object({
     title: zod_1.default.string(),
@@ -33,5 +33,5 @@ exports.blog = zod_1.default.object({
     published: zod_1.default.boolean().default(false),
     authorId: zod_1.default.string(),
     category: zod_1.default.string(),
-    date: zod_1.default.string().datetime(),
+    date: zod_1.default.string().date(),
 });
