@@ -14,11 +14,12 @@ import { Editor } from "@tinymce/tinymce-react";
 import { createBlogInput } from "@amartripathi/blog-types";
 import axios from "axios";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export default function FullScreenBlogCreator() {
   const TINYMCE_API_KEY = import.meta.env.VITE_TINYMCE_API_KEY;
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
+  const navigate = useNavigate();
   const [blogPost, setBlogPost] = useState({
     title: "",
     content: "",
@@ -40,10 +41,14 @@ export default function FullScreenBlogCreator() {
   };
 
   const handleSubmit = async () => {
-            console.log(blogPost);
 
-    const parseResult = createBlogInput.safeParse(blogPost);
-    console.log(parseResult.error);
+    const parseResult = createBlogInput.safeParse({
+      title: "d",
+      content: "<p>dd</p>",
+      published: false,
+      category: "Uncategorized",
+      date: "2024-10-15",
+    });
     
     if (parseResult.error) {
       toast.error("Please provide valid inputs!");
@@ -51,7 +56,7 @@ export default function FullScreenBlogCreator() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.post(
-          `${BACKEND_URL}/api/v1/blog/`,
+          `${BACKEND_URL}/api/v1/blog`,
           blogPost,
           {
             headers: {
@@ -59,8 +64,15 @@ export default function FullScreenBlogCreator() {
             },
           }
         );
-        console.log(blogPost);
-        console.log(response.data);
+          if(response.status === 201) {
+              const blogId = response?.data.id
+              toast.success(`Blog successfully created `, {
+                action: {
+                  label: "View",
+                  onClick: () => navigate(`/user/blog/${blogId}`),
+                },
+              },5000);
+          }
 
         // setBlogs(response.data?.blogs || []);
       } catch (error: unknown) {
