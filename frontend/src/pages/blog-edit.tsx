@@ -12,9 +12,10 @@ import {
 import { Label } from "@/components/ui/label";
 import { Editor } from "@tinymce/tinymce-react";
 import { createBlogInput } from "@amartripathi/blog-types";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "lucide-react";
 
 export default function FullScreenBlogCreator() {
   const TINYMCE_API_KEY = import.meta.env.VITE_TINYMCE_API_KEY;
@@ -27,7 +28,7 @@ export default function FullScreenBlogCreator() {
     category: "Uncategorized",
     date: new Date().toISOString().split("T")[0],
   });
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, value, checked } = e.target;
     setBlogPost((prev) => ({
@@ -41,15 +42,9 @@ export default function FullScreenBlogCreator() {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
+    const parseResult = createBlogInput.safeParse(blogPost);
 
-    const parseResult = createBlogInput.safeParse({
-      title: "d",
-      content: "<p>dd</p>",
-      published: false,
-      category: "Uncategorized",
-      date: "2024-10-15",
-    });
-    
     if (parseResult.error) {
       toast.error("Please provide valid inputs!");
     } else {
@@ -64,22 +59,26 @@ export default function FullScreenBlogCreator() {
             },
           }
         );
-          if(response.status === 201) {
-              const blogId = response?.data.id
-              toast.success(`Blog successfully created `, {
-                action: {
-                  label: "View",
-                  onClick: () => navigate(`/user/blog/${blogId}`),
-                },
-              },5000);
-          }
+        if (response.status === 201) {
+          setIsLoading(false);
+          const blogId = response?.data.blog.id;
+          toast.success(`Blog successfully created `, {
+            action: {
+              label: "View",
+              onClick: () => {
+                navigate(`/user/blog/${blogId}`);
+              },
+            },
+            duration: 6000,
+          });
+        }
 
         // setBlogs(response.data?.blogs || []);
       } catch (error: unknown) {
-        // const errorMessage =
-        //   (error as AxiosError)?.response?.data || "An error occurred";
-        // toast.error(`${errorMessage}, Please signin`);
-        // navigate("/signin");
+        setIsLoading(false);
+        const errorMessage =
+          (error as AxiosError)?.response?.data || "An error occurred";
+        toast.error(`${errorMessage}`);
       }
     }
   };
@@ -118,7 +117,7 @@ export default function FullScreenBlogCreator() {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-b from-gray-800 to-gray-900 flex flex-col py-24 px-52 text-white">
+    <div className="relative h-screen bg-gradient-to-b from-gray-800 to-gray-900 flex flex-col py-24 px-52 text-white">
       <header className="border-b border-gray-700 mb-4">
         <div className="container mx-auto py-2 flex justify-between items-center">
           <h1 className="text-2xl font-bold mx-auto text-blue-400">
@@ -126,14 +125,21 @@ export default function FullScreenBlogCreator() {
           </h1>
         </div>
       </header>
-
+      {isLoading && (
+        <div className=" absolute h-5/6 w-4/5  backdrop-blur-sm  left-40 z-10 flex justify-center items-center   text-3xl text-blue-500 italic font-semibold">
+          <div className="text-blue-400 flex gap-2">
+            <p> Publishing Your Blog...</p>
+            <Loader className="animate-spin" size={35} />
+          </div>
+        </div>
+      )}
       <div className="flex items-center my-4">
         <Input
           name="title"
           value={blogPost.title}
           onChange={handleInputChange}
-          placeholder="Enter your title here"
-          className="text-3xl font-bold bg-transparent rounded border-gray-600  placeholder-gray-500"
+          placeholder="Enter your title here..."
+          className="text-2xl h-12 font-bold rounded border-gray-600 placeholder:text-neutral-200"
         />
       </div>
 
@@ -181,9 +187,16 @@ export default function FullScreenBlogCreator() {
         </div>
         <Button
           onClick={handleSubmit}
-          className="rounded bg-blue-600 hover:bg-blue-500 transition duration-200"
+          className="rounded bg-blue-600 hover:bg-blue-500 transition duration-200 flex gap-2"
+          disabled={isLoading}
         >
-          Publish
+          {isLoading ? (
+            <>
+              <Loader className="animate-spin" size={18} /> Publishing
+            </>
+          ) : (
+            "Publish"
+          )}
         </Button>
       </div>
 
