@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
+// import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -9,9 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
+// import { Label } from "@/components/ui/label";
 import { Editor } from "@tinymce/tinymce-react";
-import { createBlogInput } from "@amartripathi/blog-types";
+import { createBlogInput, updateBlogInput } from "@amartripathi/blog-types";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import { useNavigate, useParams } from "react-router-dom";
@@ -24,6 +24,8 @@ export default function BlogCreatorAndEditor({ pageType } : BlogCreatorAndEditor
   const TINYMCE_API_KEY = import.meta.env.VITE_TINYMCE_API_KEY;
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
+  const { id : blogId } = useParams();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [blogPost, setBlogPost] = useState({
     title: "",
     content: "",
@@ -31,8 +33,6 @@ export default function BlogCreatorAndEditor({ pageType } : BlogCreatorAndEditor
     category: "Uncategorized",
     date: new Date().toISOString().split("T")[0],
   });
- const { id } = useParams();
-  console.log(blogPost);
   
   useEffect(() => {
      async function getBlog() {
@@ -54,7 +54,7 @@ export default function BlogCreatorAndEditor({ pageType } : BlogCreatorAndEditor
         getBlog();
     }
   }, []);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, value, checked } = e.target;
     setBlogPost((prev) => ({
@@ -69,43 +69,99 @@ export default function BlogCreatorAndEditor({ pageType } : BlogCreatorAndEditor
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    const parseResult = createBlogInput.safeParse(blogPost);
 
-    if (parseResult.error) {
-      toast.error("Please provide valid inputs!");
-    } else {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.post(
-          `${BACKEND_URL}/api/v1/blog`,
-          blogPost,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        if (response.status === 201) {
-          setIsLoading(false);
-          const blogId = response?.data.blog.id;
-          toast.success(`Blog successfully created `, {
-            action: {
-              label: "View",
-              onClick: () => {
-                navigate(`/user/blog/${blogId}`);
-              },
-            },
-            duration: 6000,
-          });
-        }
-
-        // setBlogs(response.data?.blogs || []);
-      } catch (error: unknown) {
+    if(pageType === 'createBlog') {
+      const parseResult = createBlogInput.safeParse(blogPost);
+  
+      if (parseResult.error) {
+        toast.error("Please provide valid inputs!");
         setIsLoading(false);
-        const errorMessage =
-          (error as AxiosError)?.response?.data || "An error occurred";
-        toast.error(`${errorMessage}`);
+      } else {
+        try {
+          const token = localStorage.getItem("token");
+          const response = await axios.post(
+            `${BACKEND_URL}/api/v1/blog`,
+            blogPost,
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
+          if (response.status === 201) {
+            setIsLoading(false);
+            const blogId = response?.data.blog.id;
+            toast.success(`Blog successfully created `, {
+              action: {
+                label: "View",
+                onClick: () => {
+                  navigate(`/user/blog/${blogId}`);
+                },
+              },
+              duration: 6000,
+            });
+          }
+  
+          // setBlogs(response.data?.blogs || []);
+        } catch (error: unknown) {
+          setIsLoading(false);
+          const errorMessage =
+            (error as AxiosError)?.response?.data || "An error occurred";
+          toast.error(`${errorMessage}`);
+        }
       }
+
+    }
+    else if (pageType === 'editBlog' ) {
+        const parseResult = updateBlogInput.safeParse({
+          title: blogPost?.title,
+          content: blogPost?.content,
+          published: blogPost?.published,
+          category: blogPost?.category,
+          id: blogId,
+        });
+
+        if (parseResult.error) {          
+          toast.error("Please provide valid inputs!");
+          setIsLoading(false);
+        } else {
+          try {
+            const token = localStorage.getItem("token");
+            const response = await axios.put(
+              `${BACKEND_URL}/api/v1/blog`,
+              {
+                title: blogPost?.title,
+                content: blogPost?.content,
+                published: blogPost?.published,
+                category: blogPost?.category,
+                id: blogId,
+              },
+              {
+                headers: {
+                  Authorization: token,
+                },
+              }
+            );
+            console.log("response",response);
+            
+            if (response.status === 201) {
+              setIsLoading(false);
+              const blogId = response?.data.blog.id;
+              toast.success(`Blog successfully updated `, {
+                action: {
+                  label: "View",
+                  onClick: () => {
+                    navigate(`/user/blog/${blogId}`);
+                  },
+                },
+                duration: 6000,
+              });
+            }
+          } catch  {
+            setIsLoading(false);
+            toast.error(`Server Error`);
+          }
+        }
     }
   };
 
