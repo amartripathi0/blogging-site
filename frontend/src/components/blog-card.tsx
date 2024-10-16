@@ -34,11 +34,10 @@ export default function BlogCard({
   }
   return (
     <motion.div
-      className="bg-gradient-to-b from-indigo-950  to-slate-900  rounded shadow-sm overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-lg shadow-indigo-950"
+      className="bg-gradient-to-b from-indigo-950 to-slate-900 rounded shadow-sm overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-lg shadow-indigo-950"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -5 }}
-      onClick={handleCardClick}
     >
       <div className="p-4">
         <div className="flex items-center justify-between gap-2">
@@ -65,6 +64,7 @@ export default function BlogCard({
               className="text-blue-500 hover:text-blue-600 transition-colors duration-150 flex items-center text-sm font-semibold gap-1.5"
               whileHover={{ x: 5 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              onClick={() => navigate(`blog/edit-blog/${blog?.id}`)}
             >
               Edit <Pen size={15} />
             </motion.button>
@@ -73,6 +73,7 @@ export default function BlogCard({
             className="text-blue-500 hover:text-blue-600 transition-colors duration-150 flex items-center text-sm font-semibold"
             whileHover={{ x: 5 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            onClick={handleCardClick}
           >
             Read More <ArrowRight className="ml-1 w-4 h-4" />
           </motion.button>
