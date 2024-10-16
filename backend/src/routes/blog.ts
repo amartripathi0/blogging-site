@@ -68,7 +68,7 @@ blogRouter.put("/", async (c) => {
     if (!body.success)
       return c.json({ message: "Please provide valid data" }, 400);
 
-    const { title, content }: UpdateBlogInput = body.data;
+    const { title, content, id, category , published }: UpdateBlogInput = body.data;
     const authorId = c.get("userId");
 
     const blog = await prisma.post.update({
@@ -78,6 +78,9 @@ blogRouter.put("/", async (c) => {
       data: {
         title,
         content,
+        id,
+        category,
+        published,
       },
     });
 
