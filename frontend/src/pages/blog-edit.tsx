@@ -35,25 +35,28 @@ export default function BlogCreatorAndEditor({ pageType } : BlogCreatorAndEditor
   });
   
   useEffect(() => {
-     async function getBlog() {
-       try {
-         const token = localStorage.getItem("token");
-         const response = await axios.get(`${BACKEND_URL}/api/v1/blog/${id}`, {
-           headers: {
-             Authorization: token,
-           },
-         });
-         setBlogPost(response.data?.blog || {});
-       } catch (error: unknown) {
-         const errorMessage =
-           (error as AxiosError)?.response?.data || "An error occurred";
-         toast.error(`${errorMessage}`);
-       }
-     }
-    if(pageType === 'editBlog') {
-        getBlog();
+    async function getBlog() {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `${BACKEND_URL}/api/v1/blog/${blogId}`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setBlogPost(response.data?.blog || {});
+      } catch (error: unknown) {
+        const errorMessage =
+          (error as AxiosError)?.response?.data || "An error occurred";
+        toast.error(`${errorMessage}`);
+      }
     }
-  }, []);
+    if (pageType === "editBlog") {
+      getBlog();
+    }
+  }, [pageType]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, value, checked } = e.target;
