@@ -47,15 +47,21 @@ export type CreateBlogInput = z.infer<typeof createBlogInput>;
 export declare const updateBlogInput: z.ZodObject<{
     title: z.ZodString;
     content: z.ZodString;
-    id: z.ZodNumber;
+    id: z.ZodString;
+    published: z.ZodDefault<z.ZodBoolean>;
+    category: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     title: string;
     content: string;
-    id: number;
+    published: boolean;
+    category: string;
+    id: string;
 }, {
     title: string;
     content: string;
-    id: number;
+    category: string;
+    id: string;
+    published?: boolean | undefined;
 }>;
 export type UpdateBlogInput = z.infer<typeof updateBlogInput>;
 export declare const blog: z.ZodObject<{
