@@ -20,20 +20,25 @@ export default function BlogCard({
   const formattedDate = blogDate.toLocaleDateString("en-US", options);
   const navigate = useNavigate();
 
+  function handleCardClick() {
+    if (pageType === "homepageBlogPage") {
+      navigate(`/blog/${blog?.id}`, {
+        state: {
+          pageType,
+          blog,
+        }
+      });
+    } else {
+      navigate(`/user/blog/${blog?.id}`);
+    }
+  }
   return (
     <motion.div
       className="bg-gradient-to-b from-indigo-950  to-slate-900  rounded shadow-sm overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-lg shadow-indigo-950"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -5 }}
-      onClick={() =>
-        navigate(`/blog/${blog?.id}`, {
-          state: {
-            pageType,
-            blog,
-          },
-        })
-      }
+      onClick={handleCardClick}
     >
       <div className="p-4">
         <div className="flex items-center justify-between gap-2">
@@ -47,7 +52,7 @@ export default function BlogCard({
         </h2>
 
         <p className="text-slate-300 my-2 mb-4 line-clamp-4 text-ellipsis text-pretty h-24">
-          <div dangerouslySetInnerHTML={{ __html: blog?.content || ''}} />
+          <div dangerouslySetInnerHTML={{ __html: blog?.content || "" }} />
         </p>
         <div
           className={cn(
