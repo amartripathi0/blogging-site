@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -14,10 +14,13 @@ import { Editor } from "@tinymce/tinymce-react";
 import { createBlogInput } from "@amartripathi/blog-types";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Loader } from "lucide-react";
 
-export default function FullScreenBlogCreator() {
+interface BlogCreatorAndEditorProps {
+  pageType: "createBlog" | "editBlog";
+}
+export default function BlogCreatorAndEditor({ pageType } : BlogCreatorAndEditorProps) {
   const TINYMCE_API_KEY = import.meta.env.VITE_TINYMCE_API_KEY;
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
@@ -28,6 +31,29 @@ export default function FullScreenBlogCreator() {
     category: "Uncategorized",
     date: new Date().toISOString().split("T")[0],
   });
+ const { id } = useParams();
+  console.log(blogPost);
+  
+  useEffect(() => {
+     async function getBlog() {
+       try {
+         const token = localStorage.getItem("token");
+         const response = await axios.get(`${BACKEND_URL}/api/v1/blog/${id}`, {
+           headers: {
+             Authorization: token,
+           },
+         });
+         setBlogPost(response.data?.blog || {});
+       } catch (error: unknown) {
+         const errorMessage =
+           (error as AxiosError)?.response?.data || "An error occurred";
+         toast.error(`${errorMessage}`);
+       }
+     }
+    if(pageType === 'editBlog') {
+        getBlog();
+    }
+  }, []);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, value, checked } = e.target;
@@ -121,14 +147,19 @@ export default function FullScreenBlogCreator() {
       <header className="border-b border-gray-700 mb-4">
         <div className="container mx-auto py-2 flex justify-between items-center">
           <h1 className="text-2xl font-bold mx-auto text-blue-400">
-            Create New Blog Post
+            {pageType === "editBlog"
+              ? "Blog Edit Page"
+              : "Create New Blog Post"}
           </h1>
         </div>
       </header>
       {isLoading && (
         <div className=" absolute h-5/6 w-4/5  backdrop-blur-sm  left-40 z-10 flex justify-center items-center   text-3xl text-blue-500 italic font-semibold">
           <div className="text-blue-400 flex gap-2">
-            <p> Publishing Your Blog...</p>
+            <p>
+              {" "}
+              {pageType === "editBlog" ? "Editing" : "Publishing"} Your Blog...
+            </p>
             <Loader className="animate-spin" size={35} />
           </div>
         </div>
@@ -144,8 +175,8 @@ export default function FullScreenBlogCreator() {
       </div>
 
       <div className="container mx-auto py-4 flex justify-between items-center">
-        <div className="flex space-x-4">
-          <div className="flex items-center space-x-2">
+        <div className="flex space-x-4 items-center">
+          {/* <div className="flex items-center space-x-2">
             <Switch
               id="published"
               checked={blogPost.published}
@@ -153,12 +184,13 @@ export default function FullScreenBlogCreator() {
                 setBlogPost((prev) => ({ ...prev, published: checked }))
               }
               name="published"
+
             />
             <Label htmlFor="published">Published</Label>
-          </div>
+          </div> */}
 
           <Select
-            value={blogPost.category}
+            value={blogPost?.category}
             onValueChange={(value) =>
               setBlogPost((prev) => ({ ...prev, category: value }))
             }
@@ -177,13 +209,17 @@ export default function FullScreenBlogCreator() {
             </SelectContent>
           </Select>
 
-          <Input
-            type="date"
-            name="date"
-            value={blogPost.date}
-            onChange={handleInputChange}
-            className="border border-gray-600 rounded bg-gray-800 text-white"
-          />
+          {pageType === "editBlog" ? (
+            <p>{blogPost?.date}</p>
+          ) : (
+            <Input
+              type="date"
+              name="date"
+              value={blogPost?.date}
+              onChange={handleInputChange}
+              className="border border-gray-600 rounded bg-gray-800 text-white"
+            />
+          )}
         </div>
         <Button
           onClick={handleSubmit}
@@ -194,6 +230,8 @@ export default function FullScreenBlogCreator() {
             <>
               <Loader className="animate-spin" size={18} /> Publishing
             </>
+          ) : pageType === "editBlog" ? (
+            "Edit"
           ) : (
             "Publish"
           )}
@@ -206,6 +244,7 @@ export default function FullScreenBlogCreator() {
             apiKey={TINYMCE_API_KEY}
             onEditorChange={handleContentChange}
             init={textEditorConfig}
+            value={blogPost?.content}
           />
         </div>
       </main>

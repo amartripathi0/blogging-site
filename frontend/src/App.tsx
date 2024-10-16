@@ -7,7 +7,7 @@ import Homepage from "./pages/homepage";
 import Footer from "./components/footer";
 import User from "./pages/user";
 import { BlogPost } from "./components/blogpost";
-import BlogPostCreator from "./pages/blog-edit";
+import BlogCreatorAndEditor from "./pages/blog-edit";
 
 function App() {
   return (
@@ -19,7 +19,14 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/user" element={<User />} />
           <Route path="/user/blog/:id" element={<BlogPost />} />
-          <Route path="/user/blog/create-blog" element={<BlogPostCreator />} />
+          <Route
+            path="/user/blog/create-blog"
+            element={<BlogCreatorAndEditor pageType="createBlog" />}
+          />
+          <Route
+            path="/user/blog/edit-blog/:id"
+            element={<BlogCreatorAndEditor pageType="editBlog" />}
+          />
           <Route path="/blog/:id" element={<BlogPost />} />
         </Route>
       </Routes>
