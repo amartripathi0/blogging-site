@@ -41,7 +41,7 @@ export default function Signin() {
           setIsLoading(false);
           const { token } = await response.json();
           localStorage.setItem("token", `Bearer ${token}`);
-          navigate("/user");
+          navigate("/user/blogs");
         }
       } catch {
         setIsLoading(false);
