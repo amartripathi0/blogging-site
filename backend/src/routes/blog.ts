@@ -71,14 +71,15 @@ blogRouter.put("/", async (c) => {
     const { title, content, id, category , published }: UpdateBlogInput = body.data;
     const authorId = c.get("userId");
 
+    
     const blog = await prisma.post.update({
       where: {
-        id: authorId,
+        id,
+        authorId
       },
       data: {
         title,
         content,
-        id,
         category,
         published,
       },
@@ -86,6 +87,8 @@ blogRouter.put("/", async (c) => {
 
     return c.json({ blog }, 201);
   } catch (error) {
+    console.log(error);
+    
     return c.json({ message: "Server Error" }, 500);
   }
 });
