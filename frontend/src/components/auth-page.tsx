@@ -23,7 +23,7 @@ export default function AuthPage({
     <div className="flex h-screen p-24 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 px-52">
       <div className="bg-gradient-to-br rounded  h-full w-full flex items-center justify-center">
         <motion.div
-          className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden"
+          className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden text-black"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -40,7 +40,7 @@ export default function AuthPage({
                 {formHeading}
               </h2>
               {formHeading === "Sign Up" ? (
-                <p className="text-sm text-opacity-85  mb-6">
+                <p className="text-sm text-opacity-85 mb-6 text-neutral-900">
                   {" "}
                   Already have an account?{" "}
                   <span
@@ -51,7 +51,7 @@ export default function AuthPage({
                   </span>
                 </p>
               ) : (
-                <p className="text-sm text-opacity-85  mb-6">
+                <p className="text-sm text-opacity-85 mb-6 text-neutral-900">
                   {" "}
                   Don't have an account?{" "}
                   <span
