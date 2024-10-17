@@ -11,7 +11,7 @@ export default function PageWrapper({
   innerRef?: React.MutableRefObject<HTMLElement | null>;
 }) {
   return (
-    <section ref={innerRef} className={cn("px-4 md:px-28 lg:px-40 xl:px-52  pt-28 ", additionalStyles)}>
+    <section ref={innerRef} className={cn("px-4 md:px-28 lg:px-40 xl:px-52  pt-32 pb-10 ", additionalStyles)}>
       {children}
     </section>
   );
