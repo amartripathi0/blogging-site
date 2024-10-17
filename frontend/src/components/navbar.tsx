@@ -54,9 +54,17 @@ export default function Navbar() {
             </Button>
           </a>
         );
-      case pathname === "/user/blog/create-blog":
+      case  pathname.startsWith("/user/blog/") :
         return (
           <div className="flex gap-4">
+            <Link to={"/user/blogs"} className="w-full">
+              <Button
+                variant="ghost"
+                className="w-full text-white bg-blue-600  hover:bg-blue-500 rounded"
+              >
+                Dashboard
+              </Button>
+            </Link>
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Avatar>
@@ -71,16 +79,7 @@ export default function Navbar() {
                 <DropdownMenuItem className="hover:bg-neutral-700 ">
                   Email@Email.com
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link to={"/user"} className="w-full">
-                    <Button
-                      variant="ghost"
-                      className="w-full text-white bg-blue-500 hover:text-blue-900 hover:bg-blue-400 rounded"
-                    >
-                      Dashboard
-                    </Button>
-                  </Link>
-                </DropdownMenuItem>
+
                 <DropdownMenuItem>
                   <Button
                     variant="ghost"
