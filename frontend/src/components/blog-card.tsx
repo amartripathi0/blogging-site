@@ -64,7 +64,7 @@ export default function BlogCard({
               className="text-blue-500 hover:text-blue-600 transition-colors duration-150 flex items-center text-sm font-semibold gap-1.5"
               whileHover={{ x: 5 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              onClick={() => navigate(`blog/edit-blog/${blog?.id}`)}
+              onClick={() => navigate(`/user/blog/edit-blog/${blog?.id}`)}
             >
               Edit <Pen size={15} />
             </motion.button>
