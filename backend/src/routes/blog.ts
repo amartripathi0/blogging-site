@@ -87,8 +87,7 @@ blogRouter.put("/", async (c) => {
 
     return c.json({ blog }, 201);
   } catch (error) {
-    console.log(error);
-    
+    // console.log(error);
     return c.json({ message: "Server Error" }, 500);
   }
 });

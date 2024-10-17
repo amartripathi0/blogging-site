@@ -24,7 +24,7 @@ export function BlogPost() {
           Authorization: token,
         },
       });
-      console.log(blog);
+      // console.log(blog);
 
       if (response.data?.blog !== null) setBlog(response.data?.blog);
       setIsLoading(false);

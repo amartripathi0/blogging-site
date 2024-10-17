@@ -145,7 +145,7 @@ export default function BlogCreatorAndEditor({
               },
             }
           );
-          console.log("response", response);
+          // console.log("response", response);
 
           if (response.status === 201) {
             setIsLoading(false);
