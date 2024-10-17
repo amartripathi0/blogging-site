@@ -129,3 +129,21 @@ blogRouter.get("/:id", async (c) => {
     return c.json({ message: "Server Error" }, 500);
   }
 });
+
+blogRouter.delete("/:id", async (c) => {
+  try {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+    const { id } = await c.req.param();
+    const blog = await prisma.post.delete({
+      where: {
+        id,
+      },
+    });
+
+    return c.json({ message: "Blog deleted successfully" }, 202);
+  } catch (error) {
+    return c.json({ message: "Server Error" }, 500);
+  }
+});

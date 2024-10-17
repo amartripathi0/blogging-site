@@ -15,16 +15,18 @@ import { createBlogInput, updateBlogInput } from "@amartripathi/blog-types";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import { useNavigate, useParams } from "react-router-dom";
-import { Loader } from "lucide-react";
+import { Delete, Edit, Loader, Trash, Trash2, Trash2Icon } from "lucide-react";
 
 interface BlogCreatorAndEditorProps {
   pageType: "createBlog" | "editBlog";
 }
-export default function BlogCreatorAndEditor({ pageType } : BlogCreatorAndEditorProps) {
+export default function BlogCreatorAndEditor({
+  pageType,
+}: BlogCreatorAndEditorProps) {
   const TINYMCE_API_KEY = import.meta.env.VITE_TINYMCE_API_KEY;
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
-  const { id : blogId } = useParams();
+  const { id: blogId } = useParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [blogPost, setBlogPost] = useState({
     title: "",
@@ -33,7 +35,7 @@ export default function BlogCreatorAndEditor({ pageType } : BlogCreatorAndEditor
     category: "Uncategorized",
     date: new Date().toISOString().split("T")[0],
   });
-  
+
   useEffect(() => {
     async function getBlog() {
       try {
@@ -73,9 +75,9 @@ export default function BlogCreatorAndEditor({ pageType } : BlogCreatorAndEditor
   const handleSubmit = async () => {
     setIsLoading(true);
 
-    if(pageType === 'createBlog') {
+    if (pageType === "createBlog") {
       const parseResult = createBlogInput.safeParse(blogPost);
-  
+
       if (parseResult.error) {
         toast.error("Please provide valid inputs!");
         setIsLoading(false);
@@ -104,7 +106,7 @@ export default function BlogCreatorAndEditor({ pageType } : BlogCreatorAndEditor
               duration: 6000,
             });
           }
-  
+
           // setBlogs(response.data?.blogs || []);
         } catch (error: unknown) {
           setIsLoading(false);
@@ -113,61 +115,79 @@ export default function BlogCreatorAndEditor({ pageType } : BlogCreatorAndEditor
           toast.error(`${errorMessage}`);
         }
       }
+    } else if (pageType === "editBlog") {
+      const parseResult = updateBlogInput.safeParse({
+        title: blogPost?.title,
+        content: blogPost?.content,
+        published: blogPost?.published,
+        category: blogPost?.category,
+        id: blogId,
+      });
 
-    }
-    else if (pageType === 'editBlog' ) {
-        const parseResult = updateBlogInput.safeParse({
-          title: blogPost?.title,
-          content: blogPost?.content,
-          published: blogPost?.published,
-          category: blogPost?.category,
-          id: blogId,
-        });
-
-        if (parseResult.error) {          
-          toast.error("Please provide valid inputs!");
-          setIsLoading(false);
-        } else {
-          try {
-            const token = localStorage.getItem("token");
-            const response = await axios.put(
-              `${BACKEND_URL}/api/v1/blog`,
-              {
-                title: blogPost?.title,
-                content: blogPost?.content,
-                published: blogPost?.published,
-                category: blogPost?.category,
-                id: blogId,
+      if (parseResult.error) {
+        toast.error("Please provide valid inputs!");
+        setIsLoading(false);
+      } else {
+        try {
+          const token = localStorage.getItem("token");
+          const response = await axios.put(
+            `${BACKEND_URL}/api/v1/blog`,
+            {
+              title: blogPost?.title,
+              content: blogPost?.content,
+              published: blogPost?.published,
+              category: blogPost?.category,
+              id: blogId,
+            },
+            {
+              headers: {
+                Authorization: token,
               },
-              {
-                headers: {
-                  Authorization: token,
-                },
-              }
-            );
-            console.log("response",response);
-            
-            if (response.status === 201) {
-              setIsLoading(false);
-              const blogId = response?.data.blog.id;
-              toast.success(`Blog successfully updated `, {
-                action: {
-                  label: "View",
-                  onClick: () => {
-                    navigate(`/user/blog/${blogId}`);
-                  },
-                },
-                duration: 6000,
-              });
             }
-          } catch  {
+          );
+          console.log("response", response);
+
+          if (response.status === 201) {
             setIsLoading(false);
-            toast.error(`Server Error`);
+            const blogId = response?.data.blog.id;
+            toast.success(`Blog successfully updated `, {
+              action: {
+                label: "View",
+                onClick: () => {
+                  navigate(`/user/blog/${blogId}`);
+                },
+              },
+              duration: 6000,
+            });
           }
+        } catch {
+          setIsLoading(false);
+          toast.error(`Server Error`);
         }
+      }
     }
   };
 
+  const handleBlogDelete = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.delete(
+        `${BACKEND_URL}/api/v1/blog/${blogId}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setIsLoading(false);
+      const res = response?.data.message;
+      toast.success(res);
+      navigate("/user/blogs");
+    } catch {
+      setIsLoading(false);
+      toast.error(`Server Error`);
+    }
+  };
   const textEditorConfig = {
     height: 370,
     menubar: false,
@@ -280,21 +300,56 @@ export default function BlogCreatorAndEditor({ pageType } : BlogCreatorAndEditor
             />
           )}
         </div>
-        <Button
-          onClick={handleSubmit}
-          className="rounded bg-blue-600 hover:bg-blue-500 transition duration-200 flex gap-2"
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <>
-              <Loader className="animate-spin" size={18} /> Publishing
-            </>
-          ) : pageType === "editBlog" ? (
-            "Edit"
-          ) : (
-            "Publish"
-          )}
-        </Button>
+        {pageType === "editBlog" ? (
+          <div className="flex gap-2">
+            <Button
+              onClick={handleBlogDelete}
+              className="rounded  bg-blue-600 w-32 hover:bg-blue-500 transition duration-200 flex gap-2"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <Loader className="animate-spin" size={18} /> Deleting
+                </>
+              ) : (
+                <div className="flex gap-2">
+                  Delete Blog
+                  <Trash2Icon size={18} className="text-red-500" />
+                </div>
+              )}
+            </Button>
+            <Button
+              onClick={handleSubmit}
+              className="rounded  bg-blue-600 w-32 hover:bg-blue-500 transition duration-200 flex gap-2"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <Loader className="animate-spin" size={18} /> Editing
+                </>
+              ) : (
+                <div className="flex gap-2">
+                  Edit Blog
+                  <Edit size={18} className="text-blue-50" />
+                </div>
+              )}
+            </Button>
+          </div>
+        ) : (
+          <Button
+            onClick={handleSubmit}
+            className="rounded bg-blue-600 w-28 hover:bg-blue-500 transition duration-200 flex gap-2"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <Loader className="animate-spin" size={18} /> Publishing
+              </>
+            ) : (
+              "Publish Blog"
+            )}
+          </Button>
+        )}
       </div>
 
       <main className="flex-grow container mx-auto pt-4 flex flex-col space-y-4">
