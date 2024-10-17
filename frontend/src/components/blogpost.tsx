@@ -9,8 +9,9 @@ import { useLocation, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 export function BlogPost() {
-  const [blog, setBlog] = useState<BlogType>();
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const [blog, setBlog] = useState<BlogType>();
+  const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const { state } = useLocation();
 
@@ -22,9 +23,14 @@ export function BlogPost() {
           Authorization: token,
         },
       });
-      setBlog(response.data?.blog || {});
-    } catch (error : unknown) {
-      const errorMessage = (error as AxiosError)?.response?.data || "An error occurred";
+      console.log(blog);
+
+      if (response.data?.blog !== null) setBlog(response.data?.blog);
+      setIsLoading(false);
+    } catch (error: unknown) {
+      setIsLoading(false);
+      const errorMessage =
+        (error as AxiosError)?.response?.data || "An error occurred";
       toast.error(`${errorMessage}`);
     }
   }
@@ -37,7 +43,7 @@ export function BlogPost() {
     }
   }, [state]);
 
-  if (!blog) {
+  if (isLoading) {
     return (
       <div className="h-screen w-full bg-neutral-900 flex items-center justify-center">
         <motion.div
@@ -47,6 +53,20 @@ export function BlogPost() {
           className="text-white text-2xl font-bold"
         >
           Loading...
+        </motion.div>
+      </div>
+    );
+  }
+  if (!blog && !isLoading) {
+    return (
+      <div className="h-screen w-full bg-neutral-900 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-white text-2xl font-bold"
+        >
+          The Blog doesn't exists!
         </motion.div>
       </div>
     );
@@ -70,7 +90,7 @@ export function BlogPost() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-4xl font-bold text-center mt-8 mb-4"
           >
-            {blog.title}
+            {blog?.title}
           </motion.h1>
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -80,16 +100,16 @@ export function BlogPost() {
           >
             <div className="flex items-center">
               <CalendarIcon className="mr-2 h-4 w-4" />
-              {new Date(blog.date).toLocaleDateString()}
+              {blog && new Date(blog?.date).toLocaleDateString()}
             </div>
             <div className="flex items-center">
               <Clock className="mr-2 h-4 w-4" />
-              {`${Math.ceil(blog.content.length / 200)} min read`}
+              {blog && `${Math.ceil(blog.content.length / 200)} min read`}
             </div>
             <div className="flex items-center">
               <Tag className="mr-2 h-4 w-4" />
               <Badge variant="secondary" className="bg-blue-600 text-white">
-                {blog.category}
+                {blog?.category}
               </Badge>
             </div>
           </motion.div>
@@ -100,7 +120,7 @@ export function BlogPost() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1, delay: 0.8 }}
           >
-            <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+            {blog && <div dangerouslySetInnerHTML={{ __html: blog.content }} />}
           </motion.div>
         </CardContent>
       </Card>
