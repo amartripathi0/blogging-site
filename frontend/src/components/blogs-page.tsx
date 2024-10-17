@@ -27,7 +27,7 @@ export default function BlogsPage({
       >
         {title}
       </motion.h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
         {blogsArray.map((blog) => (
           <BlogCard blog={blog} key={blog.id} pageType={pageType} />
         ))}
