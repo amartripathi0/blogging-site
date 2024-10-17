@@ -12,7 +12,7 @@ const app = new Hono<{
 }>();
 app.use("/*", async (c, next) => {
   const corsMiddlewareHandler = cors({
-    origin: [c.env.FROTEND_URL, "http://localhost:5173"],
+    origin: [c.env.FROTEND_URL],
     credentials: true,
   });
   return corsMiddlewareHandler(c, next);
