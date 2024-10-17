@@ -15,7 +15,7 @@ import { createBlogInput, updateBlogInput } from "@amartripathi/blog-types";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import { useNavigate, useParams } from "react-router-dom";
-import { Delete, Edit, Loader, Trash, Trash2, Trash2Icon } from "lucide-react";
+import { Edit, Loader, Trash2Icon } from "lucide-react";
 
 interface BlogCreatorAndEditorProps {
   pageType: "createBlog" | "editBlog";
@@ -50,9 +50,9 @@ export default function BlogCreatorAndEditor({
         );
         setBlogPost(response.data?.blog || {});
       } catch (error: unknown) {
-        const errorMessage =
-          (error as AxiosError)?.response?.data || "An error occurred";
-        toast.error(`${errorMessage}`);
+        const errorMessage = (error as AxiosError)?.response?.data || "An error occurred";
+      toast.error(`${errorMessage}, Please signin!`);
+        navigate("/signin");
       }
     }
     if (pageType === "editBlog") {

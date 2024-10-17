@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { CalendarIcon, Clock, User, Tag } from "lucide-react";
 import { BlogType } from "@amartripathi/blog-types";
 import axios, { AxiosError } from "axios";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 export function BlogPost() {
@@ -14,6 +14,7 @@ export function BlogPost() {
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const { state } = useLocation();
+  const navigate = useNavigate();
 
   async function getBlog() {
     try {
@@ -32,6 +33,7 @@ export function BlogPost() {
       const errorMessage =
         (error as AxiosError)?.response?.data || "An error occurred";
       toast.error(`${errorMessage}`);
+      navigate("/signin");
     }
   }
 

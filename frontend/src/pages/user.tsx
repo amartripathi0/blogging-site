@@ -23,7 +23,7 @@ function User() {
       setBlogs(response.data?.blogs || []);
     } catch (error: unknown) {
       const errorMessage = (error as AxiosError)?.response?.data || "An error occurred";
-      toast.error(`${errorMessage}, Please signin`);
+      toast.error(`${errorMessage}, Please signin!`);
       navigate('/signin');
     }
   }
