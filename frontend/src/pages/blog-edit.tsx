@@ -36,6 +36,13 @@ export default function BlogCreatorAndEditor({
     date: new Date().toISOString().split("T")[0],
   });
 
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const blogDate = new Date(blogPost?.date || "");
+  const formattedDate = blogDate.toLocaleDateString("en-US", options);
   useEffect(() => {
     async function getBlog() {
       try {
@@ -50,8 +57,9 @@ export default function BlogCreatorAndEditor({
         );
         setBlogPost(response.data?.blog || {});
       } catch (error: unknown) {
-        const errorMessage = (error as AxiosError)?.response?.data || "An error occurred";
-      toast.error(`${errorMessage}, Please signin!`);
+        const errorMessage =
+          (error as AxiosError)?.response?.data || "An error occurred";
+        toast.error(`${errorMessage}, Please signin!`);
         navigate("/signin");
       }
     }
@@ -225,7 +233,7 @@ export default function BlogCreatorAndEditor({
     <div className="relative h-screen bg-gradient-to-b from-gray-800 to-gray-900 flex flex-col py-24 px-52 text-white">
       <header className="border-b border-gray-700 mb-4">
         <div className="container mx-auto py-2 flex justify-between items-center">
-          <h1 className="text-2xl font-bold mx-auto text-blue-400">
+          <h1 className="text-2xl font-bold mx-auto text-blue-100">
             {pageType === "editBlog"
               ? "Blog Edit Page"
               : "Create New Blog Post"}
@@ -270,17 +278,25 @@ export default function BlogCreatorAndEditor({
 
           <Select
             value={blogPost?.category}
+            defaultValue={blogPost?.category}
             onValueChange={(value) =>
               setBlogPost((prev) => ({ ...prev, category: value }))
             }
           >
-            <SelectTrigger className="w-[160px] rounded border border-gray-600 bg-gray-800">
-              <SelectValue placeholder="Select category" />
+            <SelectTrigger className="w-[140px] rounded border border-gray-600 bg-gray-800">
+              <SelectValue
+                placeholder="Select category"
+                defaultValue="Uncategorized"
+              />
             </SelectTrigger>
-            <SelectContent className="bg-gray-800 border border-gray-600">
+            <SelectContent className="bg-gray-200  border-gray-600">
               {["Uncategorized", "Technology", "Lifestyle", "Travel"].map(
                 (category) => (
-                  <SelectItem key={category} value={category}>
+                  <SelectItem
+                    key={category}
+                    value={category}
+                    className="border-b  hover:bg-gray-300"
+                  >
                     {category}
                   </SelectItem>
                 )
@@ -289,7 +305,7 @@ export default function BlogCreatorAndEditor({
           </Select>
 
           {pageType === "editBlog" ? (
-            <p>{blogPost?.date}</p>
+            <p>{formattedDate}</p>
           ) : (
             <Input
               type="date"
