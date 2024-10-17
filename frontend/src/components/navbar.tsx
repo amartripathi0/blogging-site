@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
 import { Avatar, AvatarImage } from "./ui/avatar";
@@ -10,10 +10,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { PenIcon } from "lucide-react";
+import { toast } from "sonner";
 
 export default function Navbar() {
   const { pathname } = useLocation();
-
+  const navigate = useNavigate();
+  function handleLogout() {
+    localStorage.removeItem('token')
+    navigate("/signin");
+    toast.success('Logged out!')
+  }
   function renderAuthButtons() {
     switch (true) {
       case pathname === "/":
@@ -54,7 +60,7 @@ export default function Navbar() {
             </Button>
           </a>
         );
-      case  pathname.startsWith("/user/blog/") :
+      case pathname.startsWith("/user/blog/"):
         return (
           <div className="flex gap-4">
             <Link to={"/user/blogs"} className="w-full">
@@ -84,6 +90,7 @@ export default function Navbar() {
                   <Button
                     variant="ghost"
                     className="w-full text-white bg-blue-500 hover:text-blue-900 hover:bg-blue-400 rounded"
+                    onClick={handleLogout}
                   >
                     Log out
                   </Button>
@@ -118,6 +125,7 @@ export default function Navbar() {
                   <Button
                     variant="ghost"
                     className="w-full text-white bg-blue-500 hover:text-blue-900 hover:bg-blue-400 rounded"
+                    onClick={handleLogout}
                   >
                     Log out
                   </Button>
