@@ -7,12 +7,12 @@ const app = new Hono<{
   Bindings: {
     DATABASE_URL: string;
     JWT_SECRET: string;
-    FROTEND_URL: string;
+    FRONTEND_URL: string;
   };
 }>();
 app.use("/*", async (c, next) => {
   const corsMiddlewareHandler = cors({
-    origin: [c.env.FROTEND_URL],
+    origin: [c.env.FRONTEND_URL],
     credentials: true,
   });
   return corsMiddlewareHandler(c, next);
